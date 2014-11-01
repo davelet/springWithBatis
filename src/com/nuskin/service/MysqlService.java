@@ -3,6 +3,7 @@ package com.nuskin.service;
 import java.util.List;
 
 import com.nuskin.model.Category;
+import com.nuskin.model.Product;
 import com.nuskin.model.User;
 
 public interface MysqlService {
@@ -22,5 +23,7 @@ public interface MysqlService {
 	void updateUserInfoWithPass(User user);
 
 	List<Category> getAllCategories();
+
+	boolean insertProduct(Product product);
 
 }

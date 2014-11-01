@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nuskin.dao.CategoryMapper;
+import com.nuskin.dao.ProductMapper;
 import com.nuskin.dao.UserMapper;
 import com.nuskin.model.Category;
+import com.nuskin.model.Product;
 import com.nuskin.model.User;
 
 @Service("mysql")
 public class MySqlServiceImpl implements MysqlService {
 	private UserMapper userMapper;
 	private CategoryMapper categoryMapper;
+	private ProductMapper productMapper;
 
 	@Autowired
 	public void setUserMapper(UserMapper areaMapper) {
@@ -21,8 +24,13 @@ public class MySqlServiceImpl implements MysqlService {
 	}
 	
 	@Autowired
-	public void setcategoryMapper(CategoryMapper areaMapper) {
+	public void setCategoryMapper(CategoryMapper areaMapper) {
 		this.categoryMapper = areaMapper;
+	}
+	
+	@Autowired
+	public void setProductMapper(ProductMapper areaMapper) {
+		this.productMapper = areaMapper;
 	}
 
 	@Override
@@ -86,6 +94,15 @@ public class MySqlServiceImpl implements MysqlService {
 	public List<Category> getAllCategories() {
 		List<Category> list = categoryMapper.getAllCategory();
 		return list;
+	}
+
+	@Override
+	public boolean insertProduct(Product product) {
+		int i = productMapper.insert(product);
+		if (i > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
