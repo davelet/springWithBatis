@@ -105,4 +105,18 @@ public class MySqlServiceImpl implements MysqlService {
 		return false;
 	}
 
+	@Override
+	public List<Product> getProductListOfCategory(int c) {
+		List<Product> list = productMapper.getAllProducts(c);
+		return list;
+	}
+	
+	@Override
+	public boolean deleteProductInCateogry(Integer pid) {
+		int i = productMapper.deleteByPrimaryKey(pid);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
 }

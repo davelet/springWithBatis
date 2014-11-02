@@ -26,4 +26,8 @@ public interface MysqlService {
 
 	boolean insertProduct(Product product);
 
+	List<Product> getProductListOfCategory(int c);
+
+	boolean deleteProductInCateogry(Integer pid);
+
 }

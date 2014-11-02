@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>栏目列表</title>
-<link href="${fmreq.contextPath}/css/bootstrap.css" rel="stylesheet"
-	type="text/css" />
+<link href="${fmreq.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="${fmreq.contextPath}/js/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-<<input type="hidden" value="<%=basePath%>" id="base" />
+<input type="hidden" value="${fmreq.contextPath}" id="base" />
 	<div style="width: 40%; margin: 0 auto; background-color: lightblue;">
 		<table class="table" id="listtable">
 			<tr>
@@ -32,7 +31,7 @@
 			<#list list as c >
 			<tr>
 				<td>${c_index+1}</td>
-				<td>${c.name}</td>
+				<td><a href="${fmreq.contextPath}/category/products.nuskin?c=${c.id}">${c.name}</a></td>
 				<td>
 				<a href="javascript:void(0);" class="btn btn-primary" id="oldedit${c.id}">编辑</a> <a
 					href="javascript:void(0);" class="btn btn-primary" id="oldelete${c.id}">刪除</a> <a
