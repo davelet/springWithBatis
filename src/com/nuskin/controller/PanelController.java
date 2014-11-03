@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nuskin.model.Category;
+import com.nuskin.model.Notification;
 import com.nuskin.service.MysqlService;
 
 @Controller
@@ -34,6 +35,14 @@ public class PanelController {
 	public ModelAndView categoryView() {
 		ModelAndView maView = new ModelAndView("category");
 		List<Category> list = mysql.getAllCategories();
+		maView.addObject("list", list);
+		return maView;
+	}
+	
+	@RequestMapping("notification")
+	public ModelAndView notificationView() {
+		ModelAndView maView = new ModelAndView("notification");
+		List<Notification> list = mysql.getAllNotification();
 		maView.addObject("list", list);
 		return maView;
 	}
