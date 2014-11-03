@@ -11,7 +11,7 @@
 	<div style="width: 50%; margin: 0 auto; background-color: lightblue;">
 		<table class="table" id="listtable" style=" table-layout:fixed;">
 			<tr>
-				<td colspan="2" style="text-align: center;background-color:light"><h2>New User Add Page</h2></td>
+				<td colspan="2" style="text-align: center;background-color:light"><h2>User Edit Page</h2></td>
 			</tr>
 			<tr>
 				<td style="width:350%">ACCUNT NAME</td>

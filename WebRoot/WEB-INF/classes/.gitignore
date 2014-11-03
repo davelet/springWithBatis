@@ -1,0 +1,9 @@
+/com/
+/config.properties
+/demo/
+/freemarker.properties
+/log4j.properties
+/spring-mvc.xml
+/spring-mybatis.xml
+/spring.xml
+/test/
