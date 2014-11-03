@@ -23,6 +23,9 @@ public class PanelController {
 
 	@RequestMapping("index")
 	public ModelAndView index(Long uid) {
+		if (uid == null) {
+			uid = 2L;
+		}
 		if (uid == 1L) {
 			return new ModelAndView("forward:/account/userList.nuskin");
 		}

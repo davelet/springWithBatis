@@ -9,7 +9,7 @@ public interface CategoryMapper
 
 	int deleteByPrimaryKey(Integer id);
 
-	int insert(Category user);
+	int insert(Category record);
 
 	Category selectByPrimaryKey(Integer id);
 

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nuskin.model.Notification;
 import com.nuskin.service.MysqlService;
-import com.sun.security.auth.NTDomainPrincipal;
 
 @Controller
 @RequestMapping("notification")

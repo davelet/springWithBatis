@@ -31,15 +31,6 @@ public class AccountController {
 
 		}
 		Integer userid = mysql.checkCredentials(user, pass);
-		// if (userid>-1) {
-		// if (user.equals("admin")) {
-		// return 0;
-		// } else {
-		// return 1;
-		// }
-		// } else {
-		// return -1;
-		// }
 		return userid;
 	}
 

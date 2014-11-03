@@ -41,4 +41,8 @@ public interface MysqlService {
 
 	boolean deleteNotification(Integer nid);
 
+	boolean addCategory(Category category);
+
+	boolean updateCategory(Category category);
+
 }

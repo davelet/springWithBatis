@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nuskin.model.Category;
 import com.nuskin.model.Product;
 import com.nuskin.service.MysqlService;
 
@@ -19,6 +20,25 @@ public class CategoryController {
 	@Autowired
 	public void setAreaService(MysqlService areaService) {
 		this.mysql = areaService;
+	}
+	
+	@ResponseBody
+	@RequestMapping("add")
+	public String categoryAdd(String name){
+		Category category = new Category();
+		category.setName(name);
+		mysql.addCategory(category);
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping("update")
+	public String categoryUpdate(String name, Integer id){
+		Category category = new Category();
+		category.setName(name);
+		category.setId(id);
+		mysql.updateCategory(category);
+		return "";
 	}
 
 	@RequestMapping("productAdd")

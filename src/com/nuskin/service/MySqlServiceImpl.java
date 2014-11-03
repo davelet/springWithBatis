@@ -166,5 +166,23 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean addCategory(Category category) {
+		int i = categoryMapper.insert(category);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateCategory(Category category) {
+		int i = categoryMapper.updateByPrimaryKey(category);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
 	
 }
