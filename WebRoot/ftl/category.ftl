@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>如新AdminPanel平台</title>
+    <title>如新栏目管理平台</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='' name='description'>
@@ -284,8 +284,8 @@
             </form>
           </div>
           <ul class='nav nav-stacked'>
-            <li class='active'>
-              <a href='#'>
+            <li class=''>
+              <a href='${fmreq.contextPath}/panel/index.nuskin'>
                 <i class='icon-dashboard'></i>
                 <span>功能面板</span>
               </a>
@@ -313,7 +313,7 @@
                 <span>弹窗管理</span>
               </a>
             </li>
-            <li class=''>
+            <li class='active'>
               <a href='${fmreq.contextPath}/panel/category.nuskin'>
                 <i class='icon-table'></i>
                 <span>栏目管理</span>
@@ -416,7 +416,7 @@
               <div class='page-header page-header-with-buttons'>
                 <h1 class='pull-left'>
                   <i class='icon-dashboard'></i>
-                  <span>功能面板</span>
+                  <span>栏目管理</span>
                 </h1>
                 <div class='pull-right'>
                   <div class='btn-group hide'>
@@ -427,65 +427,63 @@
                     <span class='hidden-phone'>Custom</span>
                     <b class='caret'></b>
                     </a>
-				  </div>
+              
+                  </div>
                 </div>
               </div>
-              <div class='alert alert-info'>
-                <a class='close' data-dismiss='alert' href='#'>&times;</a>
-               		 欢迎来到
-                <strong>如新AdminPanel</strong>
-                - 小贴士你可以通过右上角的<i class='icon-adjust'></i>来改变主题颜色。
-              </div>
               <div class='row-fluid'>
-                <div class='span12 box box-transparent'>
-                  <div class='row-fluid'>
-                    <div class='span2 box-quick-link blue-background'>
-                      <a href='#'>
-                        <div class='header'>
-                          <div class='icon-comments'></div>
-                        </div>
-                        <div class='content'>微信菜单管理</div>
-                      </a>
+                <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
+                  <div class='box-header green-background'>
+                    <div class='title'>栏目列表</div>
+                    <div class='actions'>
+						<input type="button" value="添加栏目" class="btn btn-default useradd">
                     </div>
-                    <div class='span2 box-quick-link green-background'>
-                      <a href='#'>
-                        <div class='header'>
-                          <div class='icon-star'></div>
-                        </div>
-                        <div class='content'>幻灯片管理</div>
-                      </a>
-                    </div>
-                    <div class='span2 box-quick-link orange-background'>
-                      <a href='${fmreq.contextPath}/panel/notification.nuskin'>
-                        <div class='header'>
-                          <div class='icon-magic'></div>
-                        </div>
-                        <div class='content'>公告管理</div>
-                      </a>
-                    </div>
-                    <div class='span2 box-quick-link purple-background'>
-                      <a href='#'>
-                        <div class='header'>
-                          <div class='icon-eye-open'></div>
-                        </div>
-                        <div class='content'>弹窗管理</div>
-                      </a>
-                    </div>
-                    <div class='span2 box-quick-link red-background'>
-                      <a href='${fmreq.contextPath}/panel/category.nuskin'>
-                        <div class='header'>
-                          <div class='icon-inbox'></div>
-                        </div>
-                        <div class='content'>栏目管理</div>
-                      </a>
-                    </div>
-                    <div class='span2 box-quick-link muted-background'>
-                      <a href='#'>
-                        <div class='header'>
-                          <div class='icon-refresh'></div>
-                        </div>
-                        <div class='content'>店面管理</div>
-                      </a>
+                  </div>
+                  <div class='box-content box-no-padding'>
+                    <div class='responsive-table'>
+                      <div class='scrollable-area'>
+                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+                          <thead>
+                            <tr>
+                              <th>
+                               	 编号
+                              </th>
+                              <th>
+                             	  栏目名称
+                              </th>
+                              <th>
+                                	操作
+                              </th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+							<tr id="newadd" style="display: none;">
+								<td>新增</td>
+								<td><input placeholder="栏目名称" class="form-control"></td>
+								<td><a href="javascript:void(0);" class="btn btn-success" id="newaddsave">保存栏目</a></td>
+							</tr>
+							<tr id="oldadd" style="display: none;">
+								<td></td>
+								<td><input placeholder="栏目名称" class="form-control"></td>
+								<td><a href="javascript:void(0);" class="btn btn-success" id="oldaddsave">保存修改</a></td>
+							</tr>
+                          <#list list as c >
+                            <tr>
+                              <td>${c_index+1}</td>
+                              <td><a href="${fmreq.contextPath}/category/products.nuskin?c=${c.id}">${c.name}</a></td>
+                              <td>
+                                <div class='text-right'>
+                                  <a href="javascript:void(0);" class="btn btn-primary" id="oldedit${c.id}">编辑</a> 
+								  <a href="javascript:void(0);" class="btn btn-primary" id="oldelete${c.id}">刪除</a> 
+								  <a href="${fmreq.contextPath}/category/productAdd.nuskin?cid=${c.id}" class="btn btn-success">添加商品</a>
+                                </div>
+                              </td>
+                            </tr>
+						  </#list>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -598,4 +596,58 @@
     <script src="${fmreq.contextPath}/assets/javascripts/demo/charts.js" type="text/javascript"></script>
     <script src="${fmreq.contextPath}/assets/javascripts/demo/demo.js" type="text/javascript"></script>
   </body>
+<script type="text/javascript">
+var base = "${fmreq.contextPath}";
+$(document).ready(function(){
+	$("[id^=oldelete]").click(function(){
+		var cid = $(this).attr("id").substr(8);
+		if(confirm("真的要删除该栏目吗？")){
+			$.ajax({
+				url:"${fmreq.contextPath}/category/productDelete.nuskin?pid="+cid,
+				success: function(){
+					location.reload();
+				}
+			});
+		}
+	});
+	$(".useradd").click(function(){
+		$("#newadd").show();
+	});
+	$(".newaddsave").click(function(){
+		var name = $(this).parent().prev().find("input").val();
+		if ($.trim(name)==""){
+			alert("栏目名称不能为空！");
+			return;
+		}
+		$.ajax({
+			url:"${fmreq.contextPath}/category/add.nuskin?name="+name,
+			success: function(){
+				location.reload();
+			}
+		});
+	});
+	$(".oldaddsave").click(function(){
+		var name = $(this).parent().prev().find("input").val();
+		var uuid =  $(this).parent().parent().attr("uid");
+		if ($.trim(name)==""){
+			alert("栏目名称不能为空！");
+			return;
+		}
+		$.ajax({
+			url:"${fmreq.contextPath}/category/update.nuskin?name="+name+"&id="+uuid,
+			success: function(){
+				location.reload();
+			}
+		});
+	});
+	$(document).on("click","a[id^=oldedit]" ,function() {
+		var uid = $(this).attr("id").substr(7);
+		var trs = $("#oldadd").find("td");
+		$("#oldadd").attr("uid",uid);
+		var otr = $(this).parent().parent().parent();
+		$(trs[1]).find("input").val(otr.find("td").eq(1).find("a").html());
+		$("#oldadd").show();
+	});
+});
+</script>
 </html>
