@@ -3,6 +3,7 @@ package com.nuskin.service;
 import java.util.List;
 
 import com.nuskin.model.Category;
+import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
 import com.nuskin.model.User;
 
@@ -29,5 +30,15 @@ public interface MysqlService {
 	List<Product> getProductListOfCategory(int c);
 
 	boolean deleteProductInCateogry(Integer pid);
+
+	List<Notification> getAllNotification();
+
+	Notification getNotificationByNid(Integer nid);
+
+	boolean saveNotification(Notification notification);
+
+	boolean updateNotification(Notification notification);
+
+	boolean deleteNotification(Integer nid);
 
 }

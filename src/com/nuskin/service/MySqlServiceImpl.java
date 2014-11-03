@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nuskin.dao.CategoryMapper;
+import com.nuskin.dao.NotificationMapper;
 import com.nuskin.dao.ProductMapper;
 import com.nuskin.dao.UserMapper;
 import com.nuskin.model.Category;
+import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
 import com.nuskin.model.User;
 
@@ -17,6 +19,7 @@ public class MySqlServiceImpl implements MysqlService {
 	private UserMapper userMapper;
 	private CategoryMapper categoryMapper;
 	private ProductMapper productMapper;
+	private NotificationMapper noticeMapper;
 
 	@Autowired
 	public void setUserMapper(UserMapper areaMapper) {
@@ -31,6 +34,11 @@ public class MySqlServiceImpl implements MysqlService {
 	@Autowired
 	public void setProductMapper(ProductMapper areaMapper) {
 		this.productMapper = areaMapper;
+	}
+	
+	@Autowired 
+	public void setNoticeMapper(NotificationMapper noticeMapper) {
+		this.noticeMapper = noticeMapper;
 	}
 
 	@Override
@@ -119,4 +127,44 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
+	
+	@Override
+	public List<Notification> getAllNotification() {
+		List<Notification> list = noticeMapper.getAllNotice();
+		return list;
+	}
+	
+	@Override
+	public Notification getNotificationByNid(Integer nid) {
+		Notification notification = noticeMapper.selectByPrimaryKey(nid);
+		return notification;
+	}
+	
+	@Override
+	public boolean saveNotification(Notification notification) {
+		int i = noticeMapper.insert(notification);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean updateNotification(Notification notification) {
+		int i = noticeMapper.updateByPrimaryKey(notification);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean deleteNotification(Integer nid) {
+		int i = noticeMapper.deleteByPrimaryKey(nid);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+	
 }
