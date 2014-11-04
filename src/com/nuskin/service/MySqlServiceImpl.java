@@ -185,4 +185,13 @@ public class MySqlServiceImpl implements MysqlService {
 		return false;
 	}
 	
+	@Override
+	public boolean deleteCategoryById(Integer pid) {
+		int i = categoryMapper.deleteByPrimaryKey(pid);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+	
 }

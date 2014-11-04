@@ -31,8 +31,7 @@
 		(#{name,jdbcType=VARCHAR})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="com.nuskin.model.Category">
-		update users
-		set
+		update category		set
 		name = #{name,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>

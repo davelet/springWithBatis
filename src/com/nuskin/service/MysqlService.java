@@ -45,4 +45,6 @@ public interface MysqlService {
 
 	boolean updateCategory(Category category);
 
+	boolean deleteCategoryById(Integer pid);
+
 }

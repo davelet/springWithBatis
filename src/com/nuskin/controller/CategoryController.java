@@ -40,6 +40,13 @@ public class CategoryController {
 		mysql.updateCategory(category);
 		return "";
 	}
+	
+	@ResponseBody
+	@RequestMapping("delete")
+	public String deleteCategory(Integer pid) {
+		mysql.deleteCategoryById(pid);
+		return "";
+	}
 
 	@RequestMapping("productAdd")
 	public ModelAndView index(Long cid) {
