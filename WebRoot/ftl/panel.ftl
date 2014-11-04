@@ -320,7 +320,7 @@
               </a>
             </li>
             <li class=''>
-              <a href='grid.html'>
+              <a href='${fmreq.contextPath}/shop/index.nuskin'>
                 <i class='icon-th'></i>
                 <span>店面管理</span>
               </a>
@@ -480,7 +480,7 @@
                       </a>
                     </div>
                     <div class='span2 box-quick-link muted-background'>
-                      <a href='#'>
+                      <a href='${fmreq.contextPath}/shop/index.nuskin'>
                         <div class='header'>
                           <div class='icon-refresh'></div>
                         </div>

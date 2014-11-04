@@ -353,7 +353,7 @@
               </a>
             </li>
             <li class=''>
-              <a href='grid.html'>
+              <a href='${fmreq.contextPath}/shop/index.nuskin'>
                 <i class='icon-th'></i>
                 <span>店面管理</span>
               </a>
