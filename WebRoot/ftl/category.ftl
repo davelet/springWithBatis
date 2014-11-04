@@ -291,7 +291,8 @@
               </a>
             </li>
             <li class=''>
-                      <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
+               <a class="" href="${fmreq.contextPath}/menu/index.nuskin">
+				<i class='icon-edit'></i>
               <span>微信菜单管理</span>
               </a>
 			</li>
@@ -603,7 +604,7 @@ $(document).ready(function(){
 		var cid = $(this).attr("id").substr(8);
 		if(confirm("真的要删除该栏目吗？")){
 			$.ajax({
-				url:"${fmreq.contextPath}/category/productDelete.nuskin?pid="+cid,
+				url:"${fmreq.contextPath}/category/delete.nuskin?pid="+cid,
 				success: function(){
 					location.reload();
 				}
@@ -613,7 +614,7 @@ $(document).ready(function(){
 	$(".useradd").click(function(){
 		$("#newadd").show();
 	});
-	$(".newaddsave").click(function(){
+	$("#newaddsave").click(function(){
 		var name = $(this).parent().prev().find("input").val();
 		if ($.trim(name)==""){
 			alert("栏目名称不能为空！");
@@ -626,7 +627,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$(".oldaddsave").click(function(){
+	$("#oldaddsave").click(function(){
 		var name = $(this).parent().prev().find("input").val();
 		var uuid =  $(this).parent().parent().attr("uid");
 		if ($.trim(name)==""){

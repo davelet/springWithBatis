@@ -291,7 +291,7 @@
               </a>
             </li>
             <li class=''>
-                      <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
+                      <a class="" href="${fmreq.contextPath}/menu/index.nuskin"><i class='icon-edit'></i>
               <span>微信菜单管理</span>
               </a>
 			</li>

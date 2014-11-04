@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>如新账户管理平台</title>
+    <title>如新菜单管理平台</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='' name='description'>
@@ -290,8 +290,8 @@
                 <span>功能面板</span>
               </a>
             </li>
-            <li class=''>
-                      <a class="" href="${fmreq.contextPath}/menu/index.nuskin"><i class='icon-edit'></i>
+            <li class='active'>
+              <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
               <span>微信菜单管理</span>
               </a>
 			</li>
@@ -416,7 +416,7 @@
               <div class='page-header page-header-with-buttons'>
                 <h1 class='pull-left'>
                   <i class='icon-dashboard'></i>
-                  <span>账户管理</span>
+                  <span>菜单管理</span>
                 </h1>
                 <div class='pull-right'>
                   <div class='btn-group hide'>
@@ -427,61 +427,35 @@
                     <span class='hidden-phone'>Custom</span>
                     <b class='caret'></b>
                     </a>
-              
-                  </div>
+				  </div>
                 </div>
               </div>
-              <div class='row-fluid hide useredit'>
+              <div class='row-fluid'>
                 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
                   <div class='box-header green-background'>
-                    <div class='title'>账户编辑</div>
+                    <div class='title'>获取AccessToken</div>
                     <div class='actions'>
-                    	<input type="button" class="btn" value="保存" id="saveedit">
+                    	<input type="button" value="获取AcessToken" class="btn useradd">	
                     </div>
                   </div>
                   <div class='box-content box-no-padding'>
                     <div class='responsive-table'>
                       <div class='scrollable-area'>
-                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;' id="_useredit">
-	                        <tr>
-		            			<td></td>
-		            			<td></td>
-		            			<td><input type="text" class="form-control" placeholder="新邮箱，留空则不修改"></td>
-		            			<td><input type="text" class="form-control" placeholder="新密码，留空则不修改"></td>
-	            			</tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-			  <div class='row-fluid'>
-                <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
-                  <div class='box-header green-background'>
-                    <div class='title'>账户列表</div>
-                    <div class='actions'>
-                    	<input type="button" value="添加新用户" class="btn useradd">
-                    </div>
-                  </div>
-                  <div class='box-content box-no-padding'>
-                    <div class='responsive-table'>
-                      <div class='scrollable-area'>
-                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-	        			<tr>
-	        				<td style="width:10%"></td>
-	        				<td style="width:30%"><B>账号</B></td>
-	        				<td style="width:30%"><B>邮箱地址</B></td>
-	        				<td style="width:30%"></td>
-	        			</tr>
-	        			<#list list as user>
-	        			<tr>
-	        				<td>${user_index+1}</td>
-	        				<td>${user.name}</td>
-	        				<td>${user.email!!}</td>
-	        				<td><a href='javascript:void(0);' id='useredit${user.id}' class="btn btn-primary">编辑</a> 
-	        					<a href='javascript:void(0);' id='userdelete${user.id}' class="btn btn-danger">删除</a></td>
-	        			</tr>
-	        			</#list>
+                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;table-layout:fixed;' id="listtable">
+                          <tbody>
+							<tr>
+								<td style="width:35%">AppId</td>
+								<td style="width:65%"><input type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td style="width:35%">AppSecret</td>
+								<td style="width:65%"><input type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td style="width:35%">AccessToken</td>
+								<td style="width:65%"><input type="text" readonly class="form-control"></td>
+							</tr>
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -596,51 +570,38 @@
     <script src="${fmreq.contextPath}/assets/javascripts/demo/charts.js" type="text/javascript"></script>
     <script src="${fmreq.contextPath}/assets/javascripts/demo/demo.js" type="text/javascript"></script>
   </body>
-  <script type="text/javascript">
-var base = "${fmreq.contextPath}";
-$(document).ready(function() {
-	$(".useradd").on("click", function() {
-		location.href = base + "/account/add.nuskin";
-	});
-	$(document).on("click", "[id^=userdelete]", function() {
-		if($(this).attr("id")=="userdelete1"){
-			alert("不可删除的用户");
-			return;
-		}
-		if (confirm("真的要删除该用户吗？")) {
-			$.ajax({
-				url : base + "/account/userdelete.nuskin?id=" + $(this).attr("id").substr(10),
-				success : function() {
-					location.reload();
-				}
-			});
-		}
-	});
-	$(document).on("click","a[id^=useredit]" ,function() {
-		if($(this).attr("id")=="useredit1"){
-			alert("不可编辑的用户");
-			return;
-		}
-		var uid = $(this).attr("id").substr(8);
-		var trs = $("#_useredit").find("td");
-		$("#_useredit").attr("uid",uid);
-		var otr = $(this).parent().parent();
-		$(trs[1]).html(otr.find("td").eq(1).html());
-		$(trs[2]).find("input").html(otr.find("td").eq(2).html());
-		$(trs[3]).find("input").html("");
-		$("#_useredit").show();$(".useredit").show();
-	});
-	$("#saveedit").click(function(){
-		var uid = $("#_useredit").attr("uid");
-		var email = $("#_useredit").find("input").eq(0).val();
-		var pass = $("#_useredit").find("input").eq(1).val();
-		$.ajax({
-			url: base+"/account/usereditsave.nuskin?uid="+uid+"&email="+email+"&pass="+pass,
-			success: function(ans){
-				location.reload();
+<script type="text/javascript">
+	var base = "${fmreq.contextPath}";
+	$(document).ready(function() {
+		$(".useradd").on("click",function(){
+			var appid = $(".form-control").eq(0).val();
+			var secret = $(".form-control").eq(1).val();
+			if($.trim(appid)==""){
+				alert("请先填写AppId和AppSecret!");
+				return;
+			}if($.trim(secret)==""){
+				alert("请先填写AppSecret!");
+				return;
 			}
+			location.href = base+"/menu/token.nuskin?appid="+appid+"&appsecret="+secret;
+			<#--
+			$.ajax({
+				url: base+"/menu/token.nuskin",
+				type: "post",
+				data: "appid="+appid+"&appsecret="+secret,
+				success: function(ans){
+					if(ans == "null"){
+						alert("获取失败，请重试！");
+					}
+					else{
+						$(".form-control").eq(2).val(ans);
+						if(confirm("toekn的有效期是两小时。是否现在就去设置微信菜单？")){
+							location.href = "${fmreq.contextPath}/menu/setMenu.nuskin?token="+ans;
+						}
+					}
+				}
+			}); -->
 		});
 	});
-});
 </script>
 </html>

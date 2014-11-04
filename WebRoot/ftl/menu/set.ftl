@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>如新账户管理平台</title>
+    <title>如新菜单管理平台</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='' name='description'>
@@ -59,6 +59,39 @@
     <link href="${fmreq.contextPath}/assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
     <link href="${fmreq.contextPath}/assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
     <link href="${fmreq.contextPath}/assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" />
+<style>
+	.txtButton {
+		width: 150px;
+	}
+
+	select.dllButtonDetails {
+		padding: 5px;
+	}
+
+		select.dllButtonDetails option {
+			padding: 5px;
+		}
+
+	.txtButtonDetails {
+		width: 200px;
+	}
+
+	.txtToken {
+		width: 80%;
+	}
+
+	.submitArea {
+		clear: both;
+	}
+
+	.leftArea {
+		width: 450px;
+	}
+
+	.float-left {
+		float: left;
+	}
+</style>
   </head>
   <body class='contrast-red '>
     <header>
@@ -290,8 +323,8 @@
                 <span>功能面板</span>
               </a>
             </li>
-            <li class=''>
-                      <a class="" href="${fmreq.contextPath}/menu/index.nuskin"><i class='icon-edit'></i>
+            <li class='active'>
+              <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
               <span>微信菜单管理</span>
               </a>
 			</li>
@@ -416,7 +449,7 @@
               <div class='page-header page-header-with-buttons'>
                 <h1 class='pull-left'>
                   <i class='icon-dashboard'></i>
-                  <span>账户管理</span>
+                  <span>菜单管理</span>
                 </h1>
                 <div class='pull-right'>
                   <div class='btn-group hide'>
@@ -427,65 +460,231 @@
                     <span class='hidden-phone'>Custom</span>
                     <b class='caret'></b>
                     </a>
-              
-                  </div>
+				  </div>
                 </div>
               </div>
-              <div class='row-fluid hide useredit'>
+              <div class='row-fluid'>
                 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
                   <div class='box-header green-background'>
-                    <div class='title'>账户编辑</div>
-                    <div class='actions'>
-                    	<input type="button" class="btn" value="保存" id="saveedit">
+                    <div class='title'>菜单设置</div>
+                    <div class='actions hide'>
+                    	<input type="button" value="删除菜单" class="btn useradd">	
                     </div>
                   </div>
-                  <div class='box-content box-no-padding'>
-                    <div class='responsive-table'>
-                      <div class='scrollable-area'>
-                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;' id="_useredit">
-	                        <tr>
-		            			<td></td>
-		            			<td></td>
-		            			<td><input type="text" class="form-control" placeholder="新邮箱，留空则不修改"></td>
-		            			<td><input type="text" class="form-control" placeholder="新密码，留空则不修改"></td>
-	            			</tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-			  <div class='row-fluid'>
-                <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
-                  <div class='box-header green-background'>
-                    <div class='title'>账户列表</div>
-                    <div class='actions'>
-                    	<input type="button" value="添加新用户" class="btn useradd">
-                    </div>
-                  </div>
-                  <div class='box-content box-no-padding'>
-                    <div class='responsive-table'>
-                      <div class='scrollable-area'>
-                        <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-	        			<tr>
-	        				<td style="width:10%"></td>
-	        				<td style="width:30%"><B>账号</B></td>
-	        				<td style="width:30%"><B>邮箱地址</B></td>
-	        				<td style="width:30%"></td>
-	        			</tr>
-	        			<#list list as user>
-	        			<tr>
-	        				<td>${user_index+1}</td>
-	        				<td>${user.name}</td>
-	        				<td>${user.email!!}</td>
-	        				<td><a href='javascript:void(0);' id='useredit${user.id}' class="btn btn-primary">编辑</a> 
-	        					<a href='javascript:void(0);' id='userdelete${user.id}' class="btn btn-danger">删除</a></td>
-	        			</tr>
-	        			</#list>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                  <div class='container-fluid'>
+						<div class='row-fluid' id='content-wrapper'>
+							<div class="clear-fix"></div>
+							<div class="span12" id="menuEditor">
+								<h3>使用说明及规则，请仔细阅读</h3>
+								<ul>
+									<li>官方要求：一级菜单按钮个数为2-3个</li>
+									<li>官方要求：如果设置了二级菜单，子按钮个数为2-5个</li>
+									<li>官方要求：按钮描述，既按钮名字，不超过16个字节，子菜单不超过40个字节</li>
+									<li>如果name不填，此按钮将被忽略</li>
+									<li>如果一级菜单为空，该列所有设置的二级菜单都会被忽略</li>
+									<li>key仅在SingleButton（单击按钮，无下级菜单）的状态下设置，如果此按钮有下级菜单，key将被忽略</li>
+									<li>所有二级菜单都为SingleButton</li>
+									<li>如果要快速看到微信上的菜单最新状态，需要重新关注，否则需要静静等待N小时</li>
+								</ul>
+								<p></p>
+								<hr /> 
+								<form action="${fmreq.contextPath}/menu/create.nuskin" id="form_Menu" method="post">                
+									<p>
+										当前Token:
+										<input id="tokenStr" name="token" type="text" class="txtToken" readonly="readonly" value="kNO9KTFKwqBxS8SuQRawfBUp6bau6ppqN02Xp3aD_kJ6WYULxJMVwenCOrzT2MgYPa1OzWbejsbWUYddjCBQoIxkXCz-Ttf1oRUeVGM2d8A" /><br />
+									</p>
+									<p>
+										<input id="btnGetMenu" type="button" value="获取当前菜单" />
+										<input id="btnDeleteMenu" type="button" value="删除菜单" />
+									</p>
+									<p>
+										操作状态：<strong id="menuState"></strong>
+									</p>
+									<div class="float-left" style="margin-right: 5px">
+										<table>
+											<thead>
+												<tr>
+													<th></th>
+													<th>第一列</th>
+													<th>第二列</th>
+													<th>第三列</th>
+												</tr>
+											</thead>
+											<tbody>
+													<tr id="rootMenuRow">
+														<td>
+															二级菜单No.1
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].sub_button[0].key" id="menu_button0_sub_button0_key"/>
+																<input type="hidden" name="menu.button[0].sub_button[0].type" id="menu_button0_sub_button0_type" value="click"/>
+																<input type="hidden" name="menu.button[0].sub_button[0].url" id="menu_button0_sub_button0_url" />
+																<input type="text" name="menu.button[0].sub_button[0].name" id="menu_button0_sub_button0_name" class="txtButton" data-i="0" data-j="0"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].sub_button[0].key" id="menu_button1_sub_button0_key"/>
+																<input type="hidden" name="menu.button[1].sub_button[0].type" id="menu_button1_sub_button0_type" value="click"/>
+																<input type="hidden" name="menu.button[1].sub_button[0].url" id="menu_button1_sub_button0_url" />
+																<input type="text" name="menu.button[1].sub_button[0].name" id="menu_button1_sub_button0_name" class="txtButton" data-i="0" data-j="1"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].sub_button[0].key" id="menu_button2_sub_button0_key"/>
+																<input type="hidden" name="menu.button[2].sub_button[0].type" id="menu_button2_sub_button0_type" value="click"/>
+																<input type="hidden" name="menu.button[2].sub_button[0].url" id="menu_button2_sub_button0_url" />
+																<input type="text" name="menu.button[2].sub_button[0].name" id="menu_button2_sub_button0_name" class="txtButton" data-i="0" data-j="2"  />
+															</td>
+													</tr>
+													<tr id="rootMenuRow">
+														<td>
+															二级菜单No.2
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].sub_button[1].key" id="menu_button0_sub_button1_key"/>
+																<input type="hidden" name="menu.button[0].sub_button[1].type" id="menu_button0_sub_button1_type" value="click"/>
+																<input type="hidden" name="menu.button[0].sub_button[1].url" id="menu_button0_sub_button1_url" />
+																<input type="text" name="menu.button[0].sub_button[1].name" id="menu_button0_sub_button1_name" class="txtButton" data-i="1" data-j="0"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].sub_button[1].key" id="menu_button1_sub_button1_key"/>
+																<input type="hidden" name="menu.button[1].sub_button[1].type" id="menu_button1_sub_button1_type" value="click"/>
+																<input type="hidden" name="menu.button[1].sub_button[1].url" id="menu_button1_sub_button1_url" />
+																<input type="text" name="menu.button[1].sub_button[1].name" id="menu_button1_sub_button1_name" class="txtButton" data-i="1" data-j="1"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].sub_button[1].key" id="menu_button2_sub_button1_key"/>
+																<input type="hidden" name="menu.button[2].sub_button[1].type" id="menu_button2_sub_button1_type" value="click"/>
+																<input type="hidden" name="menu.button[2].sub_button[1].url" id="menu_button2_sub_button1_url" />
+																<input type="text" name="menu.button[2].sub_button[1].name" id="menu_button2_sub_button1_name" class="txtButton" data-i="1" data-j="2"  />
+															</td>
+													</tr>
+													<tr id="rootMenuRow">
+														<td>
+															二级菜单No.3
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].sub_button[2].key" id="menu_button0_sub_button2_key"/>
+																<input type="hidden" name="menu.button[0].sub_button[2].type" id="menu_button0_sub_button2_type" value="click"/>
+																<input type="hidden" name="menu.button[0].sub_button[2].url" id="menu_button0_sub_button2_url" />
+																<input type="text" name="menu.button[0].sub_button[2].name" id="menu_button0_sub_button2_name" class="txtButton" data-i="2" data-j="0"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].sub_button[2].key" id="menu_button1_sub_button2_key"/>
+																<input type="hidden" name="menu.button[1].sub_button[2].type" id="menu_button1_sub_button2_type" value="click"/>
+																<input type="hidden" name="menu.button[1].sub_button[2].url" id="menu_button1_sub_button2_url" />
+																<input type="text" name="menu.button[1].sub_button[2].name" id="menu_button1_sub_button2_name" class="txtButton" data-i="2" data-j="1"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].sub_button[2].key" id="menu_button2_sub_button2_key"/>
+																<input type="hidden" name="menu.button[2].sub_button[2].type" id="menu_button2_sub_button2_type" value="click"/>
+																<input type="hidden" name="menu.button[2].sub_button[2].url" id="menu_button2_sub_button2_url" />
+																<input type="text" name="menu.button[2].sub_button[2].name" id="menu_button2_sub_button2_name" class="txtButton" data-i="2" data-j="2"  />
+															</td>
+													</tr>
+													<tr id="rootMenuRow">
+														<td>
+															二级菜单No.4
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].sub_button[3].key" id="menu_button0_sub_button3_key"/>
+																<input type="hidden" name="menu.button[0].sub_button[3].type" id="menu_button0_sub_button3_type" value="click"/>
+																<input type="hidden" name="menu.button[0].sub_button[3].url" id="menu_button0_sub_button3_url" />
+																<input type="text" name="menu.button[0].sub_button[3].name" id="menu_button0_sub_button3_name" class="txtButton" data-i="3" data-j="0"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].sub_button[3].key" id="menu_button1_sub_button3_key"/>
+																<input type="hidden" name="menu.button[1].sub_button[3].type" id="menu_button1_sub_button3_type" value="click"/>
+																<input type="hidden" name="menu.button[1].sub_button[3].url" id="menu_button1_sub_button3_url" />
+																<input type="text" name="menu.button[1].sub_button[3].name" id="menu_button1_sub_button3_name" class="txtButton" data-i="3" data-j="1"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].sub_button[3].key" id="menu_button2_sub_button3_key"/>
+																<input type="hidden" name="menu.button[2].sub_button[3].type" id="menu_button2_sub_button3_type" value="click"/>
+																<input type="hidden" name="menu.button[2].sub_button[3].url" id="menu_button2_sub_button3_url" />
+																<input type="text" name="menu.button[2].sub_button[3].name" id="menu_button2_sub_button3_name" class="txtButton" data-i="3" data-j="2"  />
+															</td>
+													</tr>
+													<tr id="rootMenuRow">
+														<td>
+															二级菜单No.5
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].sub_button[4].key" id="menu_button0_sub_button4_key"/>
+																<input type="hidden" name="menu.button[0].sub_button[4].type" id="menu_button0_sub_button4_type" value="click"/>
+																<input type="hidden" name="menu.button[0].sub_button[4].url" id="menu_button0_sub_button4_url" />
+																<input type="text" name="menu.button[0].sub_button[4].name" id="menu_button0_sub_button4_name" class="txtButton" data-i="4" data-j="0"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].sub_button[4].key" id="menu_button1_sub_button4_key"/>
+																<input type="hidden" name="menu.button[1].sub_button[4].type" id="menu_button1_sub_button4_type" value="click"/>
+																<input type="hidden" name="menu.button[1].sub_button[4].url" id="menu_button1_sub_button4_url" />
+																<input type="text" name="menu.button[1].sub_button[4].name" id="menu_button1_sub_button4_name" class="txtButton" data-i="4" data-j="1"  />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].sub_button[4].key" id="menu_button2_sub_button4_key"/>
+																<input type="hidden" name="menu.button[2].sub_button[4].type" id="menu_button2_sub_button4_type" value="click"/>
+																<input type="hidden" name="menu.button[2].sub_button[4].url" id="menu_button2_sub_button4_url" />
+																<input type="text" name="menu.button[2].sub_button[4].name" id="menu_button2_sub_button4_name" class="txtButton" data-i="4" data-j="2"  />
+															</td>
+													</tr>
+													<tr id="subMenuRow_5">
+														<td>
+															一级菜单按钮
+														</td>
+															<td>
+																<input type="hidden" name="menu.button[0].key" id="menu_button0_key"/>
+																<input type="hidden" name="menu.button[0].type" id="menu_button0_type" value="click"/>
+																<input type="hidden" name="menu.button[0].url" id="menu_button0_url" />
+																<input type="text" name="menu.button[0].name" id="menu_button0_name" class="txtButton" data-i="5" data-j="0" data-root="0" />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[1].key" id="menu_button1_key"/>
+																<input type="hidden" name="menu.button[1].type" id="menu_button1_type" value="click"/>
+																<input type="hidden" name="menu.button[1].url" id="menu_button1_url" />
+																<input type="text" name="menu.button[1].name" id="menu_button1_name" class="txtButton" data-i="5" data-j="1" data-root="1" />
+															</td>
+															<td>
+																<input type="hidden" name="menu.button[2].key" id="menu_button2_key"/>
+																<input type="hidden" name="menu.button[2].type" id="menu_button2_type" value="click"/>
+																<input type="hidden" name="menu.button[2].url" id="menu_button2_url" />
+																<input type="text" name="menu.button[2].name" id="menu_button2_name" class="txtButton" data-i="5" data-j="2" data-root="2" />
+															</td>
+													</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="float-left" style="margin-left: 5px" id="buttonDetails">
+										<h3>按钮其他参数</h3>
+										<p>Name：<input type="text" id="buttonDetails_name" class="txtButton" disabled="disabled" /></p>
+										<p>
+											Type：
+											<select id="buttonDetails_type" class="dllButtonDetails">
+												<option value="click" selected="selected">点击事件（传回服务器）</option>
+												<option value="view">访问网页（直接跳转）</option>
+												<option value="scancode_waitmsg">扫码</option>
+												<option value="pic_sysphoto">系统拍照发图</option>
+												<option value="pic_photo_or_album">拍照或者相册发图</option>
+												<option value="pic_weixin">微信相册发图</option>
+												<option value="location_select">发送位置</option>
+											</select>
+										</p>
+										<p id="buttonDetails_key_area">
+											Key：<input id="buttonDetails_key" type="text" class="txtButtonDetails" />
+										</p>
+										<p id="buttonDetails_url_area">
+											Url：<input id="buttonDetails_url" type="text" class="txtButtonDetails" />
+										</p>
+										<p>
+											如果还有下级菜单请忽略Type和Key、Url。<br />
+										</p>
+									</div>
+									<div class="clear-fix"></div>
+									<div id="submitArea">
+										<input type="button" value="更新到服务器" id="submitMenu" />
+									</div>
+								</form>        
+							</div>
+						</div>
+					</div>
                 </div>
               </div>
               <hr class='hr-drouble'>
@@ -596,51 +795,185 @@
     <script src="${fmreq.contextPath}/assets/javascripts/demo/charts.js" type="text/javascript"></script>
     <script src="${fmreq.contextPath}/assets/javascripts/demo/demo.js" type="text/javascript"></script>
   </body>
-  <script type="text/javascript">
-var base = "${fmreq.contextPath}";
-$(document).ready(function() {
-	$(".useradd").on("click", function() {
-		location.href = base + "/account/add.nuskin";
-	});
-	$(document).on("click", "[id^=userdelete]", function() {
-		if($(this).attr("id")=="userdelete1"){
-			alert("不可删除的用户");
-			return;
-		}
-		if (confirm("真的要删除该用户吗？")) {
+<script>
+    var senparc = {};
+    var maxSubMenuCount = 5;
+    var menuState;
+    var baseUrl = 'http://demo.586886.com/wechat';
+    var showMenuEditor = true;
+
+senparc.menu = {
+    token: '',
+    init: function () {
+        menuState = $('#menuState');
+
+        if ( !showMenuEditor ) {
+            $('#buttonDetails').hide();
+            $('#menuEditor').hide();
+        } else {
+            var token = '${token}';
+            senparc.menu.token = token;
+            $('#tokenStr').val(token);
+            $('#menuEditor').show();
+            $('#menuLogin').hide();
+        }
+
+        $("#buttonDetails_type").change(senparc.menu.typeChanged);
+
+        $(':input[id^=menu_button]').click(function () {
+            $('#buttonDetails').show();
+            var idPrefix = $(this).attr('data-root')
+                            ? ('menu_button' + $(this).attr('data-root'))
+                            : ('menu_button' + $(this).attr('data-j') + '_sub_button' + $(this).attr('data-i'));
+
+            var keyId = idPrefix + "_key";
+            var nameId = idPrefix + "_name";
+            var typeId = idPrefix + "_type";
+            var urlId = idPrefix + "_url";
+
+            var txtDetailsKey = $('#buttonDetails_key');
+            var txtDetailsName = $('#buttonDetails_name');
+            var ddlDetailsType = $('#buttonDetails_type');
+            var txtDetailsUrl = $('#buttonDetails_url');
+
+            var hiddenButtonKey = $('#' + keyId);
+            var hiddenButtonType = $('#' + typeId);
+            var hiddenButtonUrl = $('#' + urlId);
+
+            txtDetailsKey.val(hiddenButtonKey.val());
+            txtDetailsName.val($('#' + nameId).val());
+            ddlDetailsType.val(hiddenButtonType.val());
+            txtDetailsUrl.val(hiddenButtonUrl.val());
+
+            senparc.menu.typeChanged();
+
+            txtDetailsKey.unbind('blur').blur(function () {
+                hiddenButtonKey.val($(this).val());
+            });
+            ddlDetailsType.unbind('blur').blur(function () {
+                hiddenButtonType.val($(this).val());
+            });
+            txtDetailsUrl.unbind('blur').blur(function () {
+                hiddenButtonUrl.val($(this).val());
+            });
+        });
+		
+        $('#btnGetMenu').click(function () {
+            menuState.html('获取菜单中...');
+            //$.getJSON(baseUrl + '/Menu/GetMenu?t=' + Math.random(), { 'dtype': 'jsonp','token': senparc.menu.token }, function (json) {
 			$.ajax({
-				url : base + "/account/userdelete.nuskin?id=" + $(this).attr("id").substr(10),
-				success : function() {
-					location.reload();
+				url: "${fmreq.contextPath}/menu/get.nuskin?token="+senparc.menu.token, 
+				success: function (json) {
+					json = $.parseJSON(json);
+					json = $.parseJSON(json);
+					if (json.menu) {
+						$(':input[id^=menu_button]:not([id$=_type])').val('');
+						$('#buttonDetails:input').val('');
+
+						var buttons = json.menu.button;
+						//此处i与j和页面中反转
+						for (var i = 0; i < buttons.length; i++) {
+							var button = buttons[i];
+							$('#menu_button' + i + '_name').val(button.name);
+							$('#menu_button' + i + '_key').val(button.key);
+							$('#menu_button' + i + '_type').val(button.type || 'click');
+							$('#menu_button' + i + '_url').val(button.url);
+
+							if (button.sub_button && button.sub_button.length > 0) {
+								//二级菜单
+								for (var j = 0; j < button.sub_button.length; j++) {
+									var subButton = button.sub_button[j];
+									var idPrefix = '#menu_button' + i + '_sub_button' + j;
+									$(idPrefix + "_name").val(subButton.name);
+									$(idPrefix + "_type").val(subButton.type || 'click');
+									$(idPrefix + "_key").val(subButton.key);
+									$(idPrefix + "_url").val(subButton.url);
+								}
+							} else {
+								//底部菜单
+								//...
+							}
+						}
+						menuState.html('已完成');
+					} else {
+						menuState.html(json.error || '执行过程有错误，请检查！');
+					}
 				}
 			});
-		}
-	});
-	$(document).on("click","a[id^=useredit]" ,function() {
-		if($(this).attr("id")=="useredit1"){
-			alert("不可编辑的用户");
-			return;
-		}
-		var uid = $(this).attr("id").substr(8);
-		var trs = $("#_useredit").find("td");
-		$("#_useredit").attr("uid",uid);
-		var otr = $(this).parent().parent();
-		$(trs[1]).html(otr.find("td").eq(1).html());
-		$(trs[2]).find("input").html(otr.find("td").eq(2).html());
-		$(trs[3]).find("input").html("");
-		$("#_useredit").show();$(".useredit").show();
-	});
-	$("#saveedit").click(function(){
-		var uid = $("#_useredit").attr("uid");
-		var email = $("#_useredit").find("input").eq(0).val();
-		var pass = $("#_useredit").find("input").eq(1).val();
-		$.ajax({
-			url: base+"/account/usereditsave.nuskin?uid="+uid+"&email="+email+"&pass="+pass,
-			success: function(ans){
-				location.reload();
-			}
-		});
-	});
-});
+        });
+
+        $('#btnDeleteMenu').click(function () {
+            if (!confirm('确定要删除菜单吗？此操作无法撤销！')) {
+                return;
+            }
+            menuState.html('删除菜单中...');
+            $.getJSON('${fmreq.contextPath}/menu/delete.nuskin', { token: senparc.menu.token }, function (json) {
+				json = $.parseJSON(json);
+				json = $.parseJSON(json);
+                if (json.Success) {
+                    menuState.html('删除成功，如果是误删，并且界面上有最新的菜单状态，可以立即点击【更新到服务器】按钮。');
+                } else {
+                    menuState.html(json.Message);
+                }
+            });
+        });
+
+        $('#submitMenu').click(function () {
+            if (!confirm('确定要提交吗？此操作无法撤销！')) {
+                return;
+            }
+            menuState.html('上传中...');
+			var datum = $('#form_Menu').serialize();
+			$.ajax({
+				url: "${fmreq.contextPath}/menu/create.nuskin",
+				data: datum,
+				method: "post",
+				dataType: "json",
+				success: function (json) {
+					json = $.parseJSON(json);
+                    if (json.errmsg == "ok") {
+                        menuState.html('上传成功');
+                    } else {
+                        menuState.html(json.errmsg);
+                    }
+                }
+			});
+			<#--
+            $('#form_Menu').ajaxSubmit({
+                dataType: 'json',
+                success: function (json) {
+					json = $.parseJSON(json);
+					json = $.parseJSON(json);
+                    if (json.Successed) {
+                        menuState.html('上传成功');
+                    } else {
+                        menuState.html(json.Message);
+                    }
+                }
+            }); -->
+        });
+    },
+    typeChanged: function () {
+        var val = $('#buttonDetails_type').val();
+        if (val.toUpperCase() == 'CLICK') {
+            $('#buttonDetails_key_area').slideDown(100);
+            $('#buttonDetails_url_area').slideUp(100);
+        } else {
+            $('#buttonDetails_key_area').slideUp(100);
+            $('#buttonDetails_url_area').slideDown(100);
+        }
+    },
+    setToken: function (token) {
+        senparc.menu.token = token;
+        $('#tokenStr').val(token);
+        $('#menuEditor').show();
+        $('#menuLogin').hide();
+    }
+};
+</script>
+<script>
+    $(function () {
+        senparc.menu.init();
+    });
 </script>
 </html>
