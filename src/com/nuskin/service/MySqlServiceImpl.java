@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.nuskin.dao.CategoryMapper;
 import com.nuskin.dao.NotificationMapper;
 import com.nuskin.dao.ProductMapper;
+import com.nuskin.dao.ShopMapper;
 import com.nuskin.dao.UserMapper;
 import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
+import com.nuskin.model.Shop;
 import com.nuskin.model.User;
 
 @Service("mysql")
@@ -20,25 +22,35 @@ public class MySqlServiceImpl implements MysqlService {
 	private CategoryMapper categoryMapper;
 	private ProductMapper productMapper;
 	private NotificationMapper noticeMapper;
+	private ShopMapper shopMapper;
 
 	@Autowired
 	public void setUserMapper(UserMapper areaMapper) {
 		this.userMapper = areaMapper;
 	}
-	
+
 	@Autowired
 	public void setCategoryMapper(CategoryMapper areaMapper) {
 		this.categoryMapper = areaMapper;
 	}
-	
+
 	@Autowired
 	public void setProductMapper(ProductMapper areaMapper) {
 		this.productMapper = areaMapper;
 	}
-	
-	@Autowired 
+
+	@Autowired
 	public void setNoticeMapper(NotificationMapper noticeMapper) {
 		this.noticeMapper = noticeMapper;
+	}
+
+	public ShopMapper getShopMapper() {
+		return shopMapper;
+	}
+
+	@Autowired
+	public void setShopMapper(ShopMapper shopMapper) {
+		this.shopMapper = shopMapper;
 	}
 
 	@Override
@@ -86,13 +98,13 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public User getUserById(Long uid) {
 		User user = userMapper.selectByPrimaryKey(uid.intValue());
 		return user;
 	}
-	
+
 	@Override
 	public void updateUserInfoWithPass(User user) {
 		userMapper.updateByPrimaryKey(user);
@@ -118,7 +130,7 @@ public class MySqlServiceImpl implements MysqlService {
 		List<Product> list = productMapper.getAllProducts(c);
 		return list;
 	}
-	
+
 	@Override
 	public boolean deleteProductInCateogry(Integer pid) {
 		int i = productMapper.deleteByPrimaryKey(pid);
@@ -127,19 +139,19 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public List<Notification> getAllNotification() {
 		List<Notification> list = noticeMapper.getAllNotice();
 		return list;
 	}
-	
+
 	@Override
 	public Notification getNotificationByNid(Integer nid) {
 		Notification notification = noticeMapper.selectByPrimaryKey(nid);
 		return notification;
 	}
-	
+
 	@Override
 	public boolean saveNotification(Notification notification) {
 		int i = noticeMapper.insert(notification);
@@ -148,7 +160,7 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean updateNotification(Notification notification) {
 		int i = noticeMapper.updateByPrimaryKey(notification);
@@ -157,7 +169,7 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean deleteNotification(Integer nid) {
 		int i = noticeMapper.deleteByPrimaryKey(nid);
@@ -184,7 +196,7 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean deleteCategoryById(Integer pid) {
 		int i = categoryMapper.deleteByPrimaryKey(pid);
@@ -193,5 +205,35 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
+
+	@Override
+	public List<Shop> getAllShops() {
+		List<Shop> list = shopMapper.getAllShops();
+		return list;
+	}
 	
+	@Override
+	public boolean insertShopInformation(Shop shop) {
+		int i = shopMapper.insert(shop);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteShopById(Integer sid) {
+		int i = shopMapper.deleteByPrimaryKey(sid);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Shop getShopInformation(Integer id) {
+		Shop shop = shopMapper.selectByPrimaryKey(id);
+		return shop;
+	}
+
 }

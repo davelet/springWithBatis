@@ -27,14 +27,15 @@
     <select id="getAllShops" resultMap="ShopResult">
 		select
 		<include refid="Base_Column_List" />
-		from shops
+		from shops where off=0
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from shops
+		update shops
+		set off = 1
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.nuskin.model.Shop">
-		insert into category (name, address, phone, description, image, coordinate, fax)
+		insert into shops (name, address, phone, description, image, coordinate, fax)
 		values
 		(#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
 		#{image,jdbcType=VARCHAR}, #{coordinate,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR})

@@ -13,6 +13,6 @@ public interface ShopMapper
 
 	Shop selectByPrimaryKey(Integer id);
 
-	List<Shop> getAllCategory();
+	List<Shop> getAllShops();
 
 }

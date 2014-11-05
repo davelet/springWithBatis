@@ -41,7 +41,7 @@ public class WeChatMenuController {
 	public ModelAndView menuAdd(String token) {
 		ModelAndView mav = new ModelAndView("menu/set");
 		mav.addObject("token", token);
-		System.err.println("token: " + token);
+//		System.err.println("token: " + token);
 		return mav;
 	}
 
@@ -50,7 +50,6 @@ public class WeChatMenuController {
 		return "menu/token";
 	}
 
-	// @ResponseBody
 	@RequestMapping("token")
 	public ModelAndView getAccessToken(String appid, String appsecret) {
 		String token = getTokenByGetMethod(appid, appsecret);
@@ -130,13 +129,79 @@ public class WeChatMenuController {
 		http.close();
 		return body;
 	}
-	//token=H8m7bD9kEjOCXOtBQ_mmbn3rZMAy3-KvEp4e9BRKe6DwE_OFSAsAwk-idSO8LMPYx-irWLYp2xUWB-T6dy4coHv3ZzPm6K6UpGxO0BOJsQs
-	//&menu.button%5B0%5D.sub_button%5B0%5D.key=&menu.button%5B0%5D.sub_button%5B0%5D.type=click
-	//&menu.button%5B0%5D.sub_button%5B0%5D.url=&menu.button%5B0%5D.sub_button%5B0%5D.name=
-	//&menu.button%5B1%5D.sub_button%5B0%5D.key=&menu.button%5B1%5D.sub_button%5B0%5D.type=click
-	//&menu.button%5B1%5D.sub_button%5B0%5D.url=&menu.button%5B1%5D.sub_button%5B0%5D.name=
-	//&menu.button%5B2%5D.sub_button%5B0%5D.key=&menu.button%5B2%5D.sub_button%5B0%5D.type=click
-	//&menu.button%5B2%5D.sub_button%5B0%5D.url=&menu.button%5B2%5D.sub_button%5B0%5D.name=&menu.button%5B0%5D.sub_button%5B1%5D.key=&menu.button%5B0%5D.sub_button%5B1%5D.type=click&menu.button%5B0%5D.sub_button%5B1%5D.url=&menu.button%5B0%5D.sub_button%5B1%5D.name=&menu.button%5B1%5D.sub_button%5B1%5D.key=&menu.button%5B1%5D.sub_button%5B1%5D.type=click&menu.button%5B1%5D.sub_button%5B1%5D.url=&menu.button%5B1%5D.sub_button%5B1%5D.name=&menu.button%5B2%5D.sub_button%5B1%5D.key=&menu.button%5B2%5D.sub_button%5B1%5D.type=click&menu.button%5B2%5D.sub_button%5B1%5D.url=&menu.button%5B2%5D.sub_button%5B1%5D.name=&menu.button%5B0%5D.sub_button%5B2%5D.key=&menu.button%5B0%5D.sub_button%5B2%5D.type=click&menu.button%5B0%5D.sub_button%5B2%5D.url=&menu.button%5B0%5D.sub_button%5B2%5D.name=&menu.button%5B1%5D.sub_button%5B2%5D.key=&menu.button%5B1%5D.sub_button%5B2%5D.type=click&menu.button%5B1%5D.sub_button%5B2%5D.url=&menu.button%5B1%5D.sub_button%5B2%5D.name=&menu.button%5B2%5D.sub_button%5B2%5D.key=&menu.button%5B2%5D.sub_button%5B2%5D.type=click&menu.button%5B2%5D.sub_button%5B2%5D.url=&menu.button%5B2%5D.sub_button%5B2%5D.name=&menu.button%5B0%5D.sub_button%5B3%5D.key=&menu.button%5B0%5D.sub_button%5B3%5D.type=click&menu.button%5B0%5D.sub_button%5B3%5D.url=&menu.button%5B0%5D.sub_button%5B3%5D.name=&menu.button%5B1%5D.sub_button%5B3%5D.key=&menu.button%5B1%5D.sub_button%5B3%5D.type=click&menu.button%5B1%5D.sub_button%5B3%5D.url=&menu.button%5B1%5D.sub_button%5B3%5D.name=&menu.button%5B2%5D.sub_button%5B3%5D.key=&menu.button%5B2%5D.sub_button%5B3%5D.type=click&menu.button%5B2%5D.sub_button%5B3%5D.url=&menu.button%5B2%5D.sub_button%5B3%5D.name=&menu.button%5B0%5D.sub_button%5B4%5D.key=&menu.button%5B0%5D.sub_button%5B4%5D.type=click&menu.button%5B0%5D.sub_button%5B4%5D.url=&menu.button%5B0%5D.sub_button%5B4%5D.name=&menu.button%5B1%5D.sub_button%5B4%5D.key=&menu.button%5B1%5D.sub_button%5B4%5D.type=click&menu.button%5B1%5D.sub_button%5B4%5D.url=&menu.button%5B1%5D.sub_button%5B4%5D.name=&menu.button%5B2%5D.sub_button%5B4%5D.key=&menu.button%5B2%5D.sub_button%5B4%5D.type=click&menu.button%5B2%5D.sub_button%5B4%5D.url=&menu.button%5B2%5D.sub_button%5B4%5D.name=&menu.button%5B0%5D.key=&menu.button%5B0%5D.type=view&menu.button%5B0%5D.url=http%3A%2F%2Fwxpay.586886.com%2Ftenpay&menu.button%5B0%5D.name=%E8%B4%AD%E7%89%A9&menu.button%5B1%5D.key=&menu.button%5B1%5D.type=view&menu.button%5B1%5D.url=https%3A%2F%2Fmp.weixin.qq.com%2Fpayfb%2Fpayfeedbackindex%3Fappid%3Dwxff1e4034f5f9f549%23wechat_webview_type%3D1%26wechat_redirect&menu.button%5B1%5D.name=%E7%BB%B4%E6%9D%83&menu.button%5B2%5D.key=&menu.button%5B2%5D.type=click&menu.button%5B2%5D.url=&menu.button%5B2%5D.name=
+			//token=Nb30cd0eqyHaOaOvJQyqfloJwaF6QlFSpjicMdhwmAFsO16GTzOWjz3CPUjn-MEMqHuou3RkcoTmPNVrEkRsAFUG8WSe-Ws4j1G0APWeBso
+			//&menu.button[0].sub_button[0].key=
+			//&menu.button[0].sub_button[0].type=click
+			//&menu.button[0].sub_button[0].url=
+			//&menu.button[0].sub_button[0].name=
+			//&menu.button[1].sub_button[0].key=
+			//&menu.button[1].sub_button[0].type=click
+			//&menu.button[1].sub_button[0].url=
+			//&menu.button[1].sub_button[0].name=
+			//&menu.button[2].sub_button[0].key=
+			//&menu.button[2].sub_button[0].type=click
+			//&menu.button[2].sub_button[0].url=
+			//&menu.button[2].sub_button[0].name=
+			//&menu.button[0].sub_button[1].key=
+			//&menu.button[0].sub_button[1].type=click
+			//&menu.button[0].sub_button[1].url=
+			//&menu.button[0].sub_button[1].name=
+			//&menu.button[1].sub_button[1].key=
+			//&menu.button[1].sub_button[1].type=click
+			//&menu.button[1].sub_button[1].url=
+			//&menu.button[1].sub_button[1].name=
+			//&menu.button[2].sub_button[1].key=
+			//&menu.button[2].sub_button[1].type=click
+			//&menu.button[2].sub_button[1].url=
+			//&menu.button[2].sub_button[1].name=
+			//&menu.button[0].sub_button[2].key=
+			//&menu.button[0].sub_button[2].type=click
+			//&menu.button[0].sub_button[2].url=
+			//&menu.button[0].sub_button[2].name=
+			//&menu.button[1].sub_button[2].key=
+			//&menu.button[1].sub_button[2].type=click
+			//&menu.button[1].sub_button[2].url=
+			//&menu.button[1].sub_button[2].name=
+			//&menu.button[2].sub_button[2].key=
+			//&menu.button[2].sub_button[2].type=click
+			//&menu.button[2].sub_button[2].url=
+			//&menu.button[2].sub_button[2].name=
+			//&menu.button[0].sub_button[3].key=
+			//&menu.button[0].sub_button[3].type=click
+			//&menu.button[0].sub_button[3].url=
+			//&menu.button[0].sub_button[3].name=
+			//&menu.button[1].sub_button[3].key=
+			//&menu.button[1].sub_button[3].type=click
+			//&menu.button[1].sub_button[3].url=
+			//&menu.button[1].sub_button[3].name=
+			//&menu.button[2].sub_button[3].key=
+			//&menu.button[2].sub_button[3].type=click
+			//&menu.button[2].sub_button[3].url=
+			//&menu.button[2].sub_button[3].name=
+			//&menu.button[0].sub_button[4].key=
+			//&menu.button[0].sub_button[4].type=click
+			//&menu.button[0].sub_button[4].url=
+			//&menu.button[0].sub_button[4].name=
+			//&menu.button[1].sub_button[4].key=
+			//&menu.button[1].sub_button[4].type=click
+			//&menu.button[1].sub_button[4].url=
+			//&menu.button[1].sub_button[4].name=
+			//&menu.button[2].sub_button[4].key=
+			//&menu.button[2].sub_button[4].type=view
+			//&menu.button[2].sub_button[4].url=baiudu.com
+			//&menu.button[2].sub_button[4].name=baidu
+			//&menu.button[0].key=
+			//&menu.button[0].type=view
+			//&menu.button[0].url=http%3A%2F%2Fwxpay.586886.com%2Ftenpay
+			//&menu.button[0].name=%E8%B4%AD%E7%89%A9
+			//&menu.button[1].key=
+			//&menu.button[1].type=view
+			//&menu.button[1].url=https%3A%2F%2Fmp.weixin.qq.com%2Fpayfb%2Fpayfeedbackindex%3Fappid%3Dwxff1e4034f5f9f549%23wechat_webview_type%3D1%26wechat_redirect
+			//&menu.button[1].name=%E7%BB%B4%E6%9D%83
+			//&menu.button[2].key=
+			//&menu.button[2].type=click
+			//&menu.button[2].url=
+			//&menu.button[2].name=baidu
 	@ResponseBody
 	@RequestMapping("create")
 	public String createMenuGetJson(String token, HttpServletRequest request, Menu menu, Button button) {
@@ -173,6 +238,7 @@ public class WeChatMenuController {
 			}
 			if (tempaArray.size()!=0) {
 				tempj.put("sub_button", tempaArray);
+				array.add(tempj);
 				continue;
 			}
 			String key = request.getParameter("menu.button["+i+"].key");

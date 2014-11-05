@@ -5,6 +5,7 @@ import java.util.List;
 import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
+import com.nuskin.model.Shop;
 import com.nuskin.model.User;
 
 public interface MysqlService {
@@ -46,5 +47,13 @@ public interface MysqlService {
 	boolean updateCategory(Category category);
 
 	boolean deleteCategoryById(Integer pid);
+
+	List<Shop> getAllShops();
+
+	boolean insertShopInformation(Shop shop);
+
+	boolean deleteShopById(Integer sid);
+
+	Shop getShopInformation(Integer id);
 
 }
