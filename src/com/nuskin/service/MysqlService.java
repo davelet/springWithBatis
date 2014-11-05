@@ -6,6 +6,7 @@ import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
 import com.nuskin.model.Shop;
+import com.nuskin.model.Slide;
 import com.nuskin.model.User;
 
 public interface MysqlService {
@@ -55,5 +56,9 @@ public interface MysqlService {
 	boolean deleteShopById(Integer sid);
 
 	Shop getShopInformation(Integer id);
+
+	List<Slide> getAllAvailableSlides();
+
+	boolean appendSlidePicture(Slide slide);
 
 }

@@ -30,11 +30,6 @@ public class ShopController {
 		this.mysql = areaService;
 	}
 	
-	@RequestMapping("/")
-	public void index(){
-		System.err.println("index");
-	}
-
 	@RequestMapping("/index")
 	public ModelAndView getShopList() {
 		List<Shop> list = mysql.getAllShops();
@@ -103,7 +98,7 @@ public class ShopController {
 			FileCopyUtils.copy(bytes, uploadedFile);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}  
+		}
 		return "ok";
 	}
 	

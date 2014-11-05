@@ -9,11 +9,13 @@ import com.nuskin.dao.CategoryMapper;
 import com.nuskin.dao.NotificationMapper;
 import com.nuskin.dao.ProductMapper;
 import com.nuskin.dao.ShopMapper;
+import com.nuskin.dao.SlideMapper;
 import com.nuskin.dao.UserMapper;
 import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
 import com.nuskin.model.Product;
 import com.nuskin.model.Shop;
+import com.nuskin.model.Slide;
 import com.nuskin.model.User;
 
 @Service("mysql")
@@ -23,6 +25,7 @@ public class MySqlServiceImpl implements MysqlService {
 	private ProductMapper productMapper;
 	private NotificationMapper noticeMapper;
 	private ShopMapper shopMapper;
+	private SlideMapper slideMapper;
 
 	@Autowired
 	public void setUserMapper(UserMapper areaMapper) {
@@ -51,6 +54,15 @@ public class MySqlServiceImpl implements MysqlService {
 	@Autowired
 	public void setShopMapper(ShopMapper shopMapper) {
 		this.shopMapper = shopMapper;
+	}
+
+	public SlideMapper getSlideMapper() {
+		return slideMapper;
+	}
+
+	@Autowired
+	public void setSlideMapper(SlideMapper slideMapper) {
+		this.slideMapper = slideMapper;
 	}
 
 	@Override
@@ -211,7 +223,7 @@ public class MySqlServiceImpl implements MysqlService {
 		List<Shop> list = shopMapper.getAllShops();
 		return list;
 	}
-	
+
 	@Override
 	public boolean insertShopInformation(Shop shop) {
 		int i = shopMapper.insert(shop);
@@ -234,6 +246,21 @@ public class MySqlServiceImpl implements MysqlService {
 	public Shop getShopInformation(Integer id) {
 		Shop shop = shopMapper.selectByPrimaryKey(id);
 		return shop;
+	}
+
+	@Override
+	public List<Slide> getAllAvailableSlides() {
+		List<Slide> list = slideMapper.getAvailableSlides();
+		return list;
+	}
+
+	@Override
+	public boolean appendSlidePicture(Slide slide) {
+		int i = slideMapper.insert(slide);
+		if (i > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
