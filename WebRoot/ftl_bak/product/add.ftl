@@ -14,15 +14,15 @@
 			</tr>
 			<tr>
 				<td style="width:350%">商品名称</td>
-				<td style="width:65%"><input type="text" class="form-control"></td>
+				<td style="width:65%"><input type="text" class="form-control span12"></td>
 			</tr>
 			<tr>
 				<td style="width:350%">商品图片链接</td>
-				<td style="width:65%"><input type="text" class="form-control"></td>
+				<td style="width:65%"><input type="text" class="form-control span12"></td>
 			</tr>
 			<tr>
 				<td style="width:350%">商品链接</td>
-				<td style="width:65%"><input type="text" class="form-control"></td>
+				<td style="width:65%"><input type="text" class="form-control span12"></td>
 			</tr>
 		</table>
 		<div style="background-color: white;">
