@@ -576,7 +576,7 @@
 				alert("公告名称不能为空");
 				return;
 			}if($.trim(addr)==""){
-				alert("公告图片不能为空");
+				alert("公告地址不能为空");
 				return;
 			}
 			$.ajax({

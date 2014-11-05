@@ -452,7 +452,11 @@
 							<#list list as c>
 							<tr>
 								<td valign="middle">${c_index+1}</td>
-								<td valign="middle">${c.name}</td>
+								<td valign="middle">
+									<a href="${fmreq.contextPath}/shop/shop.nuskin?id=${c.id}">
+									${c.name}</a>
+								<img src="${fmreq.contextPath}/upload/${c.image}" width="40px" height="30px" />
+								</td>
 								<td>${c.description}</td>
 								<td valign="middle">
 									<a href="javascript:void(0);" id="cd${c.id}">X</a>
@@ -577,17 +581,17 @@
 <script type="text/javascript">
 var base = "${fmreq.contextPath}";
 $(document).ready(function(){
-$("[id^=cd]").click(function(){
-var cid = $(this).attr("id").substr(2);
-if(confirm("真的要删除该商品吗？")){
-$.ajax({
-url:"${fmreq.contextPath}/category/productDelete.nuskin?pid="+cid,
-success:function(){
-location.reload();
-}
-});
-}
-});
+	$("[id^=cd]").click(function(){
+		var cid = $(this).attr("id").substr(2);
+		if(confirm("真的要删除该门店吗？")){
+			$.ajax({
+				url:"${fmreq.contextPath}/shop/delete.nuskin?sid="+cid,
+				success:function(){
+					location.reload();
+				}
+			});
+		}
+	});
 
 });
 </script>

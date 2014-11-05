@@ -320,7 +320,7 @@
               </a>
             </li>
             <li class='active'>
-              <a href='#'>
+              <a href='${fmreq.contextPath}/shop/index.nuskin'>
                 <i class='icon-th'></i>
                 <span>店面管理</span>
               </a>
@@ -447,7 +447,7 @@
 								<td style="width:20%">名称</td>
 								<td style="width:30%"><input type="text" class="form-control"></td>
 								<td style="width:20%">图片</td>
-								<td style="width:30%"><input type="file" class="form-control"></td>
+								<td style="width:30%"><input type="file" class="form-control" id="uploadify" name"uploadify"= value="上传"></td>
 							</tr>
 							<tr>
 								<td style="width:20%">描述</td>
@@ -587,9 +587,70 @@
     <script src="${fmreq.contextPath}/assets/javascripts/demo/inplace_editing.js" type="text/javascript"></script>
     <script src="${fmreq.contextPath}/assets/javascripts/demo/charts.js" type="text/javascript"></script>
     <script src="${fmreq.contextPath}/assets/javascripts/demo/demo.js" type="text/javascript"></script>
+	<script src="${fmreq.contextPath}/js/jquery.uploadify.min.js" type="text/javascript"></script>
+	<link href="${fmreq.contextPath}/css/uploadify.css" rel="stylesheet" type="text/css" />
   </body>
 <script type="text/javascript">
-	var base = "${fmreq.contextPath}";
-	
+var base = "${fmreq.contextPath}";
+var seleF = "";
+var stor;
+$(document).ready(function(){
+	$(".useradd").click(function(){
+		var shop = {};
+		var tds = $("#listtable").find("td");
+		shop.name = encodeURI($(tds).eq(1).find("input").val());
+		shop.picture = encodeURI(seleF);
+		shop.address = encodeURI($(tds).eq(7).find("input").val());
+		shop.coords = encodeURI($(tds).eq(9).find("input").val());
+		shop.phone = encodeURI($(tds).eq(11).find("input").val());
+		shop.fax = encodeURI($(tds).eq(13).find("input").val());
+		shop.detail = encodeURI($(tds).eq(5).find("textarea").val());
+		for(var prop in shop){
+			if($.trim(eval("shop."+prop))==""){
+				alert("不能有信息为空！");
+				return false;
+			}
+		}
+		stor = shop;
+		$("#uploadify").uploadify("upload");	
+	});
+	$("#uploadify").uploadify({
+		//指定swf文件
+		'swf': '${fmreq.contextPath}/js/uploadify.swf',
+		//后台处理的页面
+		'uploader': '${fmreq.contextPath}/shop/uploadImage.nuskin',
+		//按钮显示的文字
+		'buttonText': '上传图片',
+		//显示的高度和宽度，默认 height 30；width 120
+		//'height': 15,
+		//'width': 80,
+		//上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+		//在浏览窗口底部的文件类型下拉菜单中显示的文本
+		'fileTypeDesc': 'Image Files',
+		//允许上传的文件后缀
+		'fileTypeExts': '*.gif; *.jpg; *.png',
+		//发送给后台的其他参数通过formData指定
+		//'formData': { 'someKey': 'someValue', 'someOtherKey': 1 },
+		//上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+		//'queueID': 'fileQueue',
+		//选择文件后自动上传
+		'auto': false,
+		//设置为true将允许多文件上传
+		'multi': false,
+		'fileObjName': 'file',
+		'onSelect' : function(file) {
+            seleF = file.name;
+        },
+		'onUploadSuccess' : function(file, data, response) {
+            alert('文件' + file.name + '上传成功：' + response + ':' + data);
+			$.getJSON("${fmreq.contextPath}/shop/save.nuskin",
+				stor,
+				function(){
+					location.href = "${fmreq.contextPath}/shop/index.nuskin";
+				}
+		);
+        }
+	});
+});
 </script>
 </html>

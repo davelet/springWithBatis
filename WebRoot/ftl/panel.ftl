@@ -67,7 +67,7 @@
           <div class='container-fluid'>
             <a class='brand' href='#'>
               <i class='icon-heart-empty'></i>
-              <span class='hidden-phone'>Flatty</span>
+              <span class='hidden-phone'>NUSKIN</span>
             </a>
             <a class='toggle-nav btn pull-left' href='#'>
               <i class='icon-reorder'></i>

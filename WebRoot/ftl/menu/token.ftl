@@ -451,7 +451,7 @@
 								<td style="width:35%">AppSecret</td>
 								<td style="width:65%"><input type="text" class="form-control"></td>
 							</tr>
-							<tr>
+							<tr class="hide">
 								<td style="width:35%">AccessToken</td>
 								<td style="width:65%"><input type="text" readonly class="form-control"></td>
 							</tr>
