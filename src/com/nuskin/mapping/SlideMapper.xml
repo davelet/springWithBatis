@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuskin.dao.SlideMapper">
+	<resultMap id="BaseResultMap" type="com.nuskin.model.Slide">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="outlink" property="outlink" jdbcType="VARCHAR" />
+		<result column="picture" property="picture" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, picture, outlink
+	</sql>
+	<resultMap type="com.nuskin.model.Slide" id="SlideResult">  
+    </resultMap>
+    <select id="getAvailableSlides" resultMap="SlideResult">
+		select
+		<include refid="Base_Column_List" />
+		from slide where off=0
+	</select>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from slide where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update slide
+		set off = 1
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.nuskin.model.Slide">
+		insert into slide (picture, outlink)
+		values
+		(#{picture,jdbcType=VARCHAR}, #{outlink,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.nuskin.model.Slide">
+		update slide
+		<set>
+			<if test="outlink != null">
+				outlink = #{outlink,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null">
+				picture = #{picture,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

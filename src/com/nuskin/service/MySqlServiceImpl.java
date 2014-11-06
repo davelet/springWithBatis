@@ -262,5 +262,29 @@ public class MySqlServiceImpl implements MysqlService {
 		}
 		return false;
 	}
+	
+	@Override
+	public Slide getSlideData(Integer sid) {
+		Slide slide = slideMapper.selectById(sid);
+		return slide;
+	}
+	
+	@Override
+	public boolean deleteSoloSlide(Integer sid) {
+		int i = slideMapper.deleteByPrimaryKey(sid);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateSlidePicture(Slide slide) {
+		int i = slideMapper.updateByPrimaryKeySelective(slide);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
 
 }

@@ -61,4 +61,10 @@ public interface MysqlService {
 
 	boolean appendSlidePicture(Slide slide);
 
+	Slide getSlideData(Integer sid);
+
+	boolean deleteSoloSlide(Integer sid);
+
+	boolean updateSlidePicture(Slide slide);
+
 }
