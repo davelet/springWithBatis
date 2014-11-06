@@ -329,7 +329,7 @@
               </a>
 			</li>
             <li>
-              <a class='dropdown-collapse ' href='#'>
+              <a class='' href='${fmreq.contextPath}/slide/index.nuskin'>
                 <i class='icon-tint'></i>
                 <span>幻灯片管理</span>
               </a>
@@ -341,7 +341,7 @@
               </a>
             </li>
             <li>
-              <a class='dropdown-collapse ' href='#'>
+              <a class='' href='${fmreq.contextPath}/ad/index.nuskin'>
                 <i class='icon-cogs'></i>
                 <span>弹窗管理</span>
               </a>

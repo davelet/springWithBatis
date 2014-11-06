@@ -296,7 +296,7 @@
               </a>
 			</li>
             <li>
-              <a class='' href='#'>
+              <a class='' href='${fmreq.contextPath}/slide/index.nuskin'>
                 <i class='icon-tint'></i>
                 <span>幻灯片管理</span>
               </a>
@@ -308,7 +308,7 @@
               </a>
             </li>
             <li>
-              <a class='' href='#'>
+              <a class='' href='${fmreq.contextPath}/ad/index.nuskin'>
                 <i class='icon-cogs'></i>
                 <span>弹窗管理</span>
               </a>
@@ -435,7 +435,7 @@
                   <div class='box-header green-background'>
                     <div class='title'>店面列表</div>
                     <div class='actions'>
-						<a href="${fmreq.contextPath}/shop/add.nuskin">新增门店</a>
+						<a href="${fmreq.contextPath}/shop/add.nuskin" class="btn btn-default">新增门店</a>
                     </div>
                   </div>
                   <div class='box-content box-no-padding'>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>如新栏目管理平台</title>
+    <title>如新幻灯片管理平台</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='' name='description'>
@@ -291,12 +291,12 @@
               </a>
             </li>
             <li class=''>
-                      <a class="dropdown-collapse" href="${fmreq.contextPath}/menu/index.nuskin"><i class='icon-edit'></i>
+              <a class="" href="${fmreq.contextPath}/menu/index.nuskin"><i class='icon-edit'></i>
               <span>微信菜单管理</span>
               </a>
 			</li>
             <li>
-              <a class='' href='${fmreq.contextPath}/slide/index.nuskin'>
+              <a class='active' href='#'>
                 <i class='icon-tint'></i>
                 <span>幻灯片管理</span>
               </a>
@@ -313,7 +313,7 @@
                 <span>弹窗管理</span>
               </a>
             </li>
-            <li class='active'>
+            <li class=''>
               <a href='${fmreq.contextPath}/panel/category.nuskin'>
                 <i class='icon-table'></i>
                 <span>栏目管理</span>
@@ -416,7 +416,7 @@
               <div class='page-header page-header-with-buttons'>
                 <h1 class='pull-left'>
                   <i class='icon-dashboard'></i>
-                  <span>栏目管理</span>
+                  <span>幻灯片管理</span>
                 </h1>
                 <div class='pull-right'>
                   <div class='btn-group hide'>
@@ -433,9 +433,9 @@
               <div class='row-fluid'>
                 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
                   <div class='box-header green-background'>
-                    <div class='title'>栏目列表</div>
+                    <div class='title'>当前幻灯片列表</div>
                     <div class='actions'>
-						<input type="button" value="添加" class="btn useradd">
+						<a href="${fmreq.contextPath}/slide/add.nuskin" class="btn btn-default">新增幻灯片</a>
                     </div>
                   </div>
                   <div class='box-content box-no-padding'>
@@ -444,21 +444,18 @@
                         <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;table-layout:fixed;' id="listtable">
                           <tbody>
 							<tr>
-								<td>编号</td>
-								<td>商品名称</td>
-								<td>商品图片</td>
-								<td>删除</td>
-							</tr>
 							<#list list as c>
-							<tr>
-								<td valign="middle">${c_index+1}</td>
-								<td valign="middle">${c.name}</td>
-								<td><img height="100" width="100" src="${c.picture}" alt="${c.name}"></img></td>
-								<td valign="middle">
-								<a href="javascript:void(0);" id="cd${c.id}">X</a>
+								<td>
+									<a href="${c.outlink}">
+									<img src="${fmreq.contextPath}/slide/${c.picture!}" width="80px" height="60px" />
+									</a><br>
+									<div style="display: inline-block;width:100%;">
+										<a href="${fmreq.contextPath}/slide/display.nuskin?sid=${c.id}">查看</a>
+										<a href="javascript:void(0);" class="sldrm" sid="${c.id}">删除</a>
+									</div>
 								</td>
-							</tr>
 							</#list>
+							</tr>
                           </tbody>
                         </table>
                       </div>
@@ -577,17 +574,17 @@
 <script type="text/javascript">
 var base = "${fmreq.contextPath}";
 $(document).ready(function(){
-$("[id^=cd]").click(function(){
-var cid = $(this).attr("id").substr(2);
-if(confirm("真的要删除该商品吗？")){
-$.ajax({
-url:"${fmreq.contextPath}/category/productDelete.nuskin?pid="+cid,
-success:function(){
-location.reload();
-}
-});
-}
-});
+	$(".sldrm").click(function(){
+		var cid = $(this).attr("sid");
+		if(confirm("确定要删除该幻灯片吗？")){
+			$.ajax({
+				url:"${fmreq.contextPath}/slide/delete.nuskin?sid="+cid,
+				success:function(){
+					location.reload();
+				}
+			});
+		}
+	});
 
 });
 </script>
