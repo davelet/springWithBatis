@@ -89,8 +89,7 @@ public class WeChatMenuController {
 	public String getMenuJson(String token) {
 		AsyncHttpClient http = new AsyncHttpClient();
 		AsyncHttpClient.BoundRequestBuilder builder = http
-				.prepareGet("https://api.weixin.qq.com/cgi-bin/menu/get?access_token="
-						+ token);
+				.prepareGet("https://api.weixin.qq.com/cgi-bin/menu/get?access_token="	+ token);
 		builder.setBodyEncoding("UTF-8");
 		String body = "";
 		try {

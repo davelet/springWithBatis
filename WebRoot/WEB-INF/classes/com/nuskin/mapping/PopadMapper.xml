@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuskin.dao.PopadMapper">
+	<resultMap id="BaseResultMap" type="com.nuskin.model.Popad">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="outlink" property="outlink" jdbcType="VARCHAR" />
+		<result column="picture" property="picture" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, picture, outlink
+	</sql>
+	<select id="select" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from popad ORDER BY ID DESC LIMIT 1
+	</select>
+	<insert id="insert" parameterType="com.nuskin.model.Popad">
+		insert into popad (picture, outlink)
+		values
+		(#{picture,jdbcType=VARCHAR}, #{outlink,jdbcType=VARCHAR})
+	</insert>
+</mapper>

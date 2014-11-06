@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.nuskin.dao.CategoryMapper;
 import com.nuskin.dao.NotificationMapper;
+import com.nuskin.dao.PopadMapper;
 import com.nuskin.dao.ProductMapper;
 import com.nuskin.dao.ShopMapper;
 import com.nuskin.dao.SlideMapper;
 import com.nuskin.dao.UserMapper;
 import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
+import com.nuskin.model.Popad;
 import com.nuskin.model.Product;
 import com.nuskin.model.Shop;
 import com.nuskin.model.Slide;
@@ -26,6 +28,7 @@ public class MySqlServiceImpl implements MysqlService {
 	private NotificationMapper noticeMapper;
 	private ShopMapper shopMapper;
 	private SlideMapper slideMapper;
+	private PopadMapper popadMapper;
 
 	@Autowired
 	public void setUserMapper(UserMapper areaMapper) {
@@ -63,6 +66,15 @@ public class MySqlServiceImpl implements MysqlService {
 	@Autowired
 	public void setSlideMapper(SlideMapper slideMapper) {
 		this.slideMapper = slideMapper;
+	}
+
+	public PopadMapper getPopadMapper() {
+		return popadMapper;
+	}
+	
+	@Autowired
+	public void setPopadMapper(PopadMapper popadMapper) {
+		this.popadMapper = popadMapper;
 	}
 
 	@Override
@@ -219,8 +231,13 @@ public class MySqlServiceImpl implements MysqlService {
 	}
 
 	@Override
-	public List<Shop> getAllShops() {
-		List<Shop> list = shopMapper.getAllShops();
+	public List<Shop> getAllShops(String keyword) {
+		List<Shop> list = null;
+		if (keyword ==null || keyword.length() == 0) {
+			list = shopMapper.getAllShops();
+		}else {
+			list = shopMapper.getShopsByKey(keyword);
+		}
 		return list;
 	}
 
@@ -281,6 +298,21 @@ public class MySqlServiceImpl implements MysqlService {
 	@Override
 	public boolean updateSlidePicture(Slide slide) {
 		int i = slideMapper.updateByPrimaryKeySelective(slide);
+		if (i > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Popad getCurrentPopAd() {
+		Popad popad = popadMapper.select();
+		return popad;
+	}
+	
+	@Override
+	public boolean updatePopAd(Popad slide) {
+		int i = popadMapper.insert(slide);
 		if (i > 0) {
 			return true;
 		}

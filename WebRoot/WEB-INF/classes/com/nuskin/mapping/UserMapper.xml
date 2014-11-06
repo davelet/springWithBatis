@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuskin.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.nuskin.model.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="passwordquestion" property="passwordQuestion"
+			jdbcType="VARCHAR" />
+		<result column="passwordanswer" property="passwordAnswer"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, email, password, passwordquestion,
+		passwordanswer
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByCredentials" resultMap="BaseResultMap"	parameterType="com.nuskin.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where name = #{name,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+	</select>
+	<resultMap type="com.nuskin.model.User" id="UserResult">  
+        <!-- <association property="blog" javaType="Blog" column="blog" select="selectBlog"/>   -->
+    </resultMap>
+    <select id="getAllUsers" resultMap="UserResult">
+		select
+		<include refid="Base_Column_List" />
+		from users
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from users
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.nuskin.model.User">
+		insert into users (name,
+		email, password, passwordquestion, passwordanswer
+		)
+		values
+		(#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}, #{passwordQuestion,jdbcType=VARCHAR},
+		#{passwordAnswer,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.nuskin.model.User">
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="passwordQuestion != null">
+				passwordquestion,
+			</if>
+			<if test="passwordAnswer != null">
+				passwordanswer,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordQuestion != null">
+				#{passwordquestion,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordAnswer != null">
+				#{passwordanswer,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.nuskin.model.User">
+		update users
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordQuestion != null">
+				passwordquestion = #{passwordquestion,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordAnswer != null">
+				passwordanswer = #{passwordanswer,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.nuskin.model.User">
+		update users
+		set
+		name = #{name,jdbcType=VARCHAR},
+		email = #{email,jdbcType=INTEGER},
+		password = #{password,jdbcType=VARCHAR},
+		passwordquestion = #{passwordQuestion,jdbcType=VARCHAR},
+		passwordanswer = #{passwordAnswer,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

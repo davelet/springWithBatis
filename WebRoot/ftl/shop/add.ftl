@@ -647,7 +647,7 @@ $(document).ready(function(){
 				function(){
 					location.href = "${fmreq.contextPath}/shop/index.nuskin";
 				}
-		);
+			);
         }
 	});
 });

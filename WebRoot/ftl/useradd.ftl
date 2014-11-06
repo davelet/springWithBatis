@@ -445,23 +445,23 @@
                           <tbody>
 							<tr>
 								<td style="width:35%">账号</td>
-								<td style="width:65%"><input type="text" class="form-control"></td>
+								<td style="width:65%"><input type="text" class="form-control length word" placeholder="请输入20位以下的数字字母或下划线以字母开头" title="请输入20位以下的数字字母或下划线，以字母开头"></td>
 							</tr>
 							<tr>
 								<td style="width:35%">邮件地址</td>
-								<td style="width:65%"><input type="text" class="form-control"></td>
+								<td style="width:65%"><input type="text" class="form-control length word" placeholder="请输入20位以下的数字字母或下划线以字母开头" title="请输入20位以下的数字字母或下划线，以字母开头"></td>
 							</tr>
 							<tr>
 								<td style="width:35%">密码</td>
-								<td style="width:65%"><input type="password" class="form-control"></td>
+								<td style="width:65%"><input type="password" class="form-control length word" placeholder="请输入20位以下的数字字母或下划线以字母开头" title="请输入20位以下的数字字母或下划线，以字母开头"></td>
 							</tr>
 							<tr>
 								<td style="width:35%">密码取回问题</td>
-								<td style="width:65%"><input type="text" class="form-control"></td>
+								<td style="width:65%"><input type="text" class="form-control length hanzi" placeholder="请输入30位以下的汉字数字字母或下划线" title="请输入30位以下的汉字数字字母或下划线"></td>
 							</tr>
 							<tr>
 								<td style="width:350%">密码问题答案</td>
-								<td style="width:65%"><input type="text" class="form-control"></td>
+								<td style="width:65%"><input type="text" class="form-control length hanzi" placeholder="请输入30位以下的汉字数字字母或下划线" title="请输入30位以下的汉字数字字母或下划线"></td>
 							</tr>
                           </tbody>
                         </table>
@@ -579,31 +579,55 @@
     <script src="${fmreq.contextPath}/assets/javascripts/demo/demo.js" type="text/javascript"></script>
   </body>
 <script type="text/javascript">
-	var base = "${fmreq.contextPath}";
-	$(document).ready(function() {
-		$(".useradd").on("click",function(){
-			var user = $(".form-control").eq(0).val();
-			var pass = $(".form-control").eq(2).val();
-			if($.trim(user)=="" || $.trim()=="admin"){
-				alert("用户名不能为空或者是admin");
-				return;
+var base = "${fmreq.contextPath}";
+$(document).ready(function() {
+	$(".useradd").on("click",function(){
+		var user = $(".form-control").eq(0).val();
+		var pass = $(".form-control").eq(2).val();
+		if($.trim(user)=="" || $.trim()=="admin"){
+			alert("用户名不能为空或者是admin");
+			return;
+		}
+		if($.trim(pass)==""){
+			alert("密码不能为空");
+			return;
+		}
+		var email = $(".form-control").eq(1).val();
+		if(testEmail($.trim(email))){
+			alert("邮箱格式不正确！");
+			return;
+		}
+		var question = $(".form-control").eq(3).val();
+		var answer = $(".form-control").eq(4).val();
+		$.ajax({
+			url: base+"/account/useraddsave.nuskin",
+			data: encodeURI("user="+user+"&pass="+pass+"&email="+email+"&question="+question+"&answer="+answer),
+			type: "post",
+			success: function(ans){
+				location.href=base+"/account/userList.nuskin";
 			}
-			if($.trim(pass)==""){
-				alert("密码不能为空");
-				return;
-			}
-			var email = $(".form-control").eq(1).val();
-			var question = $(".form-control").eq(3).val();
-			var answer = $(".form-control").eq(4).val();
-			$.ajax({
-				url: base+"/account/useraddsave.nuskin",
-				data: encodeURI("user="+user+"&pass="+pass+"&email="+email+"&question="+question+"&answer="+answer),
-				type: "post",
-				success: function(ans){
-					location.href=base+"/account/userList.nuskin";
-				}
-			});
 		});
 	});
+	$(document).on("keyup",".word", function(){
+		if (!reg1.test($(this).val())){
+			$(this).val($(this).val().substring(0,$(this).val().length-1));
+		}
+	});
+	$(document).on("keyup",".hanzi", function(){
+		if (!reg2.test($(this).val())){
+			$(this).val($(this).val().substring(0,$(this).val().length-1));
+		}
+	});
+});
+var reg1 = /^[a-zA-Z][a-zA-Z0-9_]{0,19}$/;
+var reg2 = /^[\u4e00-\u9fa5a-zA-Z0-9_]?[\u4e00-\u9fa5a-zA-Z0-9_]{0,30}$/;
+function testEmail(str){
+    var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	if(reg.test(str)){
+		return true;
+	}else{
+		return false;
+	}
+}
 </script>
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nuskin.model.Category;
 import com.nuskin.model.Notification;
+import com.nuskin.model.Popad;
 import com.nuskin.model.Product;
 import com.nuskin.model.Shop;
 import com.nuskin.model.Slide;
@@ -49,7 +50,7 @@ public interface MysqlService {
 
 	boolean deleteCategoryById(Integer pid);
 
-	List<Shop> getAllShops();
+	List<Shop> getAllShops(String keyword);
 
 	boolean insertShopInformation(Shop shop);
 
@@ -66,5 +67,9 @@ public interface MysqlService {
 	boolean deleteSoloSlide(Integer sid);
 
 	boolean updateSlidePicture(Slide slide);
+
+	Popad getCurrentPopAd();
+
+	boolean updatePopAd(Popad slide);
 
 }

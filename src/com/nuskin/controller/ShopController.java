@@ -31,10 +31,16 @@ public class ShopController {
 	}
 	
 	@RequestMapping("/index")
-	public ModelAndView getShopList() {
-		List<Shop> list = mysql.getAllShops();
+	public ModelAndView getShopList(String keyword) {
+		try {
+			keyword = new String(keyword.getBytes("iso-8859-1"), "UTF-8");
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		List<Shop> list = mysql.getAllShops(keyword);
 		ModelAndView mav = new ModelAndView("shop/list");
 		mav.addObject("list", list);
+		mav.addObject("keyword", keyword);
 		return mav;
 	}
 	

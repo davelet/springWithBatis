@@ -435,6 +435,7 @@
                   <div class='box-header green-background'>
                     <div class='title'>店面列表</div>
                     <div class='actions'>
+						<input class="form-control" id="searchshop" placeholder="失去焦点开始查询门店" value="${keyword!}"/>
 						<a href="${fmreq.contextPath}/shop/add.nuskin" class="btn btn-default">新增门店</a>
                     </div>
                   </div>
@@ -592,7 +593,10 @@ $(document).ready(function(){
 			});
 		}
 	});
-
+	$("#searchshop").blur(function(){
+		var key = encodeURI($(this).val());
+		location.href = "${fmreq.contextPath}/shop/index.nuskin?keyword="+key;
+	});
 });
 </script>
 </html>

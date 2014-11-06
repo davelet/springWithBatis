@@ -15,4 +15,6 @@ public interface ShopMapper
 
 	List<Shop> getAllShops();
 
+	List<Shop> getShopsByKey(String keyword);
+
 }
