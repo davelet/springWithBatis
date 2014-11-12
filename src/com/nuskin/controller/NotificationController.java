@@ -1,5 +1,13 @@
 package com.nuskin.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +25,53 @@ public class NotificationController {
 	@Autowired
 	public void setAreaService(MysqlService areaService) {
 		this.mysql = areaService;
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("getAllNotificationData")
+//	public String GetAllNotificationData(HttpServletRequest request, HttpServletResponse response){
+//		JSONObject jsonObject = new JSONObject();
+//		try {
+//			jsonObject.put("return_code", "ok");//the result code
+//			List<Notification> list = mysql.getAllNotification();
+//			JSONArray data = new JSONArray();
+//			for (Notification notice : list) {
+//				JSONObject noticeJson = new JSONObject();
+//				noticeJson.put("name", notice.getName());
+//				noticeJson.put("address", notice.getAddress());
+//				data.add(noticeJson);
+//			}
+//			jsonObject.put("data", data);
+//		} catch (Exception e) {
+//			jsonObject.clear();
+//			jsonObject.put("return_code", "error");
+//		}
+//		response.setContentType("application/x-javascript");
+//		return "allNotificationData=" + jsonObject.toString();
+////		return jsonObject;
+//	}
+	
+	@ResponseBody
+	@RequestMapping("getAllNotificationData")
+	public JSONObject GetAllNotificationData(HttpServletRequest request, HttpServletResponse response){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("return_code", "ok");//the result code
+			List<Notification> list = mysql.getAllNotification();
+			JSONArray data = new JSONArray();
+			for (Notification notice : list) {
+				JSONObject noticeJson = new JSONObject();
+				noticeJson.put("name", notice.getName());
+				noticeJson.put("address", notice.getAddress());
+				data.add(noticeJson);
+			}
+			jsonObject.put("data", data);
+		} catch (Exception e) {
+			jsonObject.clear();
+			jsonObject.put("return_code", "error");
+		}
+		response.setContentType("application/json;charset=UTF-8");
+		return jsonObject;
 	}
 	
 	@RequestMapping("add")

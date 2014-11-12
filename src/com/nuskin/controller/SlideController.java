@@ -8,6 +8,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -28,6 +31,53 @@ public class SlideController {
 	@Autowired
 	public void setAreaService(MysqlService areaService) {
 		this.mysql = areaService;
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("getAllCurrentSlidesData")
+//	public String GetAllCurrentSlidesData(HttpServletRequest request, HttpServletResponse response){
+//		JSONObject jsonObject = new JSONObject();
+//		try {
+//			jsonObject.put("return_code", "ok");//the result code
+//			List<Slide> list = mysql.getAllAvailableSlides();
+//			JSONArray data = new JSONArray();
+//			for (Slide slide : list) {
+//				JSONObject slideJson = new JSONObject();
+//				slideJson.put("image", slide.getPicture());
+//				slideJson.put("link", slide.getOutlink());
+//				data.add(slideJson);
+//			}
+//			jsonObject.put("data", data);
+//		} catch (Exception e) {
+//			jsonObject.clear();
+//			jsonObject.put("return_code", "error");
+//		}
+//		response.setContentType("application/x-javascript");
+//		return "allCurrentSlidesData=" + jsonObject.toString();
+////		return jsonObject;
+//	}
+	
+	@ResponseBody
+	@RequestMapping("getAllCurrentSlidesData")
+	public JSONObject GetAllCurrentSlidesData(HttpServletRequest request, HttpServletResponse response){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("return_code", "ok");//the result code
+			List<Slide> list = mysql.getAllAvailableSlides();
+			JSONArray data = new JSONArray();
+			for (Slide slide : list) {
+				JSONObject slideJson = new JSONObject();
+				slideJson.put("image", slide.getPicture());
+				slideJson.put("link", slide.getOutlink());
+				data.add(slideJson);
+			}
+			jsonObject.put("data", data);
+		} catch (Exception e) {
+			jsonObject.clear();
+			jsonObject.put("return_code", "error");
+		}
+		response.setContentType("application/json;charset=UTF-8");
+		return jsonObject;
 	}
 	
 	@RequestMapping("index")

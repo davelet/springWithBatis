@@ -40,9 +40,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>SpringMVC</servlet-name>
-    <url-pattern>*.nuskin</url-pattern>
+    <url-pattern>*.js</url-pattern>
   </servlet-mapping>
-
   <session-config>
     <session-timeout>15</session-timeout>
   </session-config>

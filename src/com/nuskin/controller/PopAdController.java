@@ -3,10 +3,11 @@ package com.nuskin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nuskin.model.Popad;
-import com.nuskin.model.Slide;
 import com.nuskin.service.MysqlService;
 
 @Controller
@@ -29,6 +29,44 @@ public class PopAdController {
 	@Autowired
 	public void setAreaService(MysqlService areaService) {
 		this.mysql = areaService;
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("getCurrentPopupAdInformation")
+//	public String GetCurrentPopupAdInformation(HttpServletRequest request, HttpServletResponse response){
+//		JSONObject jsonObject = new JSONObject();
+//		try {
+//			jsonObject.put("return_code", "ok");//the result code
+//			Popad ad = mysql.getCurrentPopAd();
+//			JSONObject adJson = new JSONObject();
+//			adJson.put("image", ad.getPicture());
+//			adJson.put("link", ad.getOutlink());
+//			jsonObject.put("data", adJson);
+//		} catch (Exception e) {
+//			jsonObject.clear();
+//			jsonObject.put("return_code", "error");
+//		}
+//		response.setContentType("application/x-javascript");
+//		return "currentPopupAdInformation=" + jsonObject.toString();
+//	}
+	
+	@ResponseBody
+	@RequestMapping("getCurrentPopupAdInformation")
+	public JSONObject GetCurrentPopupAdInformation(HttpServletRequest request, HttpServletResponse response){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("return_code", "ok");//the result code
+			Popad ad = mysql.getCurrentPopAd();
+			JSONObject adJson = new JSONObject();
+			adJson.put("image", ad.getPicture());
+			adJson.put("link", ad.getOutlink());
+			jsonObject.put("data", adJson);
+		} catch (Exception e) {
+			jsonObject.clear();
+			jsonObject.put("return_code", "error");
+		}
+		response.setContentType("application/json;charset=UTF-8");
+		return jsonObject;
 	}
 	
 	@RequestMapping("index")
@@ -88,47 +126,4 @@ public class PopAdController {
 		return "ok";
 	}
 	
-	@RequestMapping("display")
-	public ModelAndView displaySlideInformation(Integer sid){
-		ModelAndView maView = new ModelAndView("ad/ad");
-		Slide slide = mysql.getSlideData(sid);
-		maView.addObject("obj", slide);
-		return maView;
-	}
-	
-	@ResponseBody
-	@RequestMapping("delete")
-	public String deleteSlide(Integer sid){
-		mysql.deleteSoloSlide(sid);
-		return "ok";
-	}
-	
-	@RequestMapping("edit")
-	public ModelAndView editSlideInformation(Integer sid){
-		ModelAndView maView = new ModelAndView("ad/edit");
-		Slide slide = mysql.getSlideData(sid);
-		maView.addObject("obj", slide);
-		return maView;
-	}
-
-	@ResponseBody
-	@RequestMapping("update")
-	public String updateSlideInformation(String link, String picture, Integer id){
-		try {
-			link = java.net.URLDecoder.decode(link,"utf-8");
-			picture = java.net.URLDecoder.decode(picture,"utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		Slide slide = new Slide();
-		if (link != null && link.trim().length()!=0) {
-			slide.setOutlink(link);
-		}
-		if (picture != null && picture.trim().length() != 0) {
-			slide.setPicture(picture);
-		}
-		slide.setId(id);
-		mysql.updateSlidePicture(slide);
-		return "ok";
-	}
 }

@@ -30,6 +30,21 @@ public class ShopController {
 		this.mysql = areaService;
 	}
 	
+	@RequestMapping("getAllShopsInformation")
+	public ModelAndView GetAllShopsInformation(String keyword, HttpServletRequest request, HttpServletResponse response){
+		try {
+			keyword = new String(keyword.getBytes("iso-8859-1"), "UTF-8");
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		List<Shop> list = mysql.getAllShops(keyword);
+		ModelAndView mav = new ModelAndView("shop/front");
+		mav.addObject("list", list);
+		mav.addObject("keyword", keyword);
+		response.setContentType("application/x-javascript;charset=UTF-8");
+		return mav;
+	}
+
 	@RequestMapping("/index")
 	public ModelAndView getShopList(String keyword) {
 		try {
